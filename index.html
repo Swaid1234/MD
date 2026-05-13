@@ -1,701 +1,246 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تحضير الموظفين</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #060a14;
-    --surface: rgba(255,255,255,0.04);
-    --border: rgba(255,255,255,0.08);
-    --accent: #3b82f6;
-    --accent2: #06b6d4;
-    --success: #10b981;
-    --error: #ef4444;
-    --warning: #f59e0b;
-    --text: #f0f4ff;
-    --muted: rgba(240,244,255,0.45);
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>نظام الحضور والانصراف</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --card-bg: rgba(10, 10, 10, 0.75);
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --radius: 18px;
+    }
 
-  body {
-    font-family: 'Tajawal', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-  }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      overflow: hidden;
+      position: relative;
+    }
 
-  /* Animated background */
-  .bg-orbs {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  }
-  .orb {
-    position: absolute; border-radius: 50%;
-    filter: blur(80px); opacity: 0.15;
-    animation: floatOrb 12s ease-in-out infinite;
-  }
-  .orb1 { width: 500px; height: 500px; background: #1d4ed8; top: -150px; right: -100px; animation-delay: 0s; }
-  .orb2 { width: 400px; height: 400px; background: #0891b2; bottom: -100px; left: -80px; animation-delay: -5s; }
-  .orb3 { width: 300px; height: 300px; background: #6366f1; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -9s; }
+    #bg {
+      position: fixed;
+      inset: 0;
+      background-image: url('YOUR_BACKGROUND_IMAGE.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.45);
+      z-index: 0;
+    }
 
-  @keyframes floatOrb {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -30px) scale(1.05); }
-    66% { transform: translate(-20px, 20px) scale(0.95); }
-  }
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 700px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
 
-  /* Grid lines */
-  .grid-bg {
-    position: fixed; inset: 0; z-index: 0;
-    background-image:
-      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
+    .header { text-align: center; }
+    .header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      text-shadow: 0 0 24px rgba(201,168,76,0.5);
+    }
+    #clock {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
 
-  .card {
-    position: relative; z-index: 1;
-    width: 100%; max-width: 440px;
-    margin: 20px;
-    background: rgba(10, 18, 35, 0.85);
-    border: 1px solid var(--border);
-    border-radius: 28px;
-    padding: 40px 36px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(59,130,246,0.1);
-  }
+    .cards {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-  /* Logo area */
-  .logo-wrap {
-    display: flex; align-items: center; justify-content: center;
-    gap: 12px; margin-bottom: 32px;
-  }
-  .logo-icon {
-    width: 52px; height: 52px; border-radius: 16px;
-    background: linear-gradient(135deg, #1d4ed8, #06b6d4);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-    box-shadow: 0 8px 24px rgba(59,130,246,0.35);
-  }
-  .logo-text { font-size: 22px; font-weight: 800; letter-spacing: 0.5px; }
-  .logo-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card {
+      flex: 1 1 240px;
+      max-width: 300px;
+      background: var(--card-bg);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: var(--radius);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 36px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: transform .28s, box-shadow .28s, border-color .28s;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(201,168,76,0.12), transparent 70%);
+      pointer-events: none;
+    }
+    .card:hover:not(.disabled) {
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--gold);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 30px rgba(201,168,76,0.2);
+    }
+    .card:active:not(.disabled) { transform: scale(0.97); }
+    .card-icon { font-size: 3rem; filter: drop-shadow(0 0 12px rgba(201,168,76,0.5)); }
+    .card-title { font-size: 1.35rem; font-weight: 700; color: var(--gold-light); }
+    .card-sub { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-align: center; line-height: 1.6; }
+    .card-time { font-size: 0.75rem; color: rgba(255,255,255,0.25); text-align: center; }
 
-  /* Divider */
-  .divider {
-    height: 1px; background: var(--border); margin: 0 0 28px;
-  }
+    .card.checkin:hover:not(.disabled)  { border-color: var(--success); box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 30px rgba(46,204,113,0.25); }
+    .card.checkout:hover:not(.disabled) { border-color: var(--danger);  box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 30px rgba(231,76,60,0.25); }
 
-  /* Date/time bar */
-  .datetime-bar {
-    display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap;
-  }
-  .dt-pill {
-    flex: 1; min-width: 120px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 14px;
-    text-align: center;
-    font-size: 13px;
-  }
-  .dt-pill .label { color: var(--muted); font-size: 11px; margin-bottom: 3px; }
-  .dt-pill .value { font-weight: 700; font-size: 15px; }
+    .card.disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+      filter: grayscale(0.4);
+    }
 
-  /* State display */
-  #state-display {
-    border-radius: 20px;
-    padding: 32px 24px;
-    text-align: center;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    margin-bottom: 24px;
-    transition: all 0.5s ease;
-    min-height: 200px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 14px;
-  }
+    .time-badge {
+      font-size: 0.75rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+    .time-badge.open   { background: rgba(46,204,113,0.2);  color: #55efc4; border: 1px solid rgba(46,204,113,0.3); }
+    .time-badge.closed { background: rgba(231,76,60,0.15);  color: #ff7675; border: 1px solid rgba(231,76,60,0.3); }
 
-  .state-icon {
-    font-size: 52px;
-    line-height: 1;
-    animation: popIn .4s cubic-bezier(.175,.885,.32,1.275);
-  }
-  @keyframes popIn {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  .state-title { font-size: 20px; font-weight: 800; }
-  .state-desc { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 280px; }
-
-  /* GPS ring animation */
-  .gps-ring {
-    width: 80px; height: 80px;
-    position: relative; margin: 0 auto;
-  }
-  .gps-ring::before, .gps-ring::after {
-    content: ''; position: absolute; inset: 0;
-    border: 2px solid var(--accent);
-    border-radius: 50%;
-    animation: ringPulse 2s ease-out infinite;
-  }
-  .gps-ring::after { animation-delay: 1s; }
-  .gps-ring-inner {
-    position: absolute; inset: 20px;
-    background: rgba(59,130,246,0.2);
-    border: 2px solid var(--accent);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-  @keyframes ringPulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(2.2); opacity: 0; }
-  }
-
-  /* Distance meter */
-  .dist-meter {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 18px;
-    display: flex; align-items: center; gap: 12px;
-    margin-top: 8px; width: 100%;
-  }
-  .dist-bar-wrap {
-    flex: 1; height: 6px; background: rgba(255,255,255,0.08);
-    border-radius: 99px; overflow: hidden;
-  }
-  .dist-bar {
-    height: 100%; border-radius: 99px;
-    background: linear-gradient(90deg, var(--success), var(--accent));
-    transition: width .8s ease, background .5s;
-  }
-  .dist-val { font-size: 13px; font-weight: 700; white-space: nowrap; }
-
-  /* Button */
-  .btn {
-    width: 100%; padding: 16px;
-    border-radius: 16px; border: none;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 17px; font-weight: 800;
-    cursor: pointer; letter-spacing: 0.3px;
-    transition: all .2s ease;
-    position: relative; overflow: hidden;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, #1d4ed8, #06b6d4);
-    color: #fff;
-    box-shadow: 0 8px 24px rgba(29,78,216,0.4);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(29,78,216,0.55); }
-  .btn-primary:active { transform: translateY(0); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-  .btn-success {
-    background: linear-gradient(135deg, #065f46, #10b981);
-    color: #fff;
-    box-shadow: 0 8px 24px rgba(16,185,129,0.35);
-    animation: glowPulse 2s ease-in-out infinite;
-  }
-  @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 8px 24px rgba(16,185,129,0.35); }
-    50% { box-shadow: 0 8px 36px rgba(16,185,129,0.6); }
-  }
-  .btn-success:hover { transform: translateY(-2px); }
-
-  /* Config panel */
-  .config-toggle {
-    text-align: center; margin-top: 20px;
-  }
-  .config-btn {
-    background: none; border: none; color: var(--muted);
-    font-family: 'Tajawal', sans-serif; font-size: 12px;
-    cursor: pointer; text-decoration: underline; padding: 4px;
-  }
-  .config-btn:hover { color: var(--accent); }
-
-  .config-panel {
-    margin-top: 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    display: none;
-  }
-  .config-panel.open { display: block; }
-  .config-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--muted); }
-
-  .field { margin-bottom: 12px; }
-  .field label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 5px; }
-  .field input {
-    width: 100%; padding: 10px 14px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--border);
-    border-radius: 10px; color: var(--text);
-    font-family: 'Tajawal', sans-serif; font-size: 14px;
-    outline: none; transition: border .2s;
-    direction: ltr;
-  }
-  .field input:focus { border-color: var(--accent); }
-
-  .save-btn {
-    width: 100%; padding: 10px;
-    background: rgba(59,130,246,0.15);
-    border: 1px solid rgba(59,130,246,0.3);
-    border-radius: 10px; color: var(--accent);
-    font-family: 'Tajawal', sans-serif; font-size: 14px;
-    font-weight: 700; cursor: pointer;
-    transition: all .2s;
-  }
-  .save-btn:hover { background: rgba(59,130,246,0.25); }
-
-  /* State colors */
-  #state-display.success { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.06); }
-  #state-display.error { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.06); }
-  #state-display.checking { border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.06); }
-
-  /* Form iframe */
-  #form-container {
-    display: none;
-    position: fixed; inset: 0; z-index: 100;
-    background: rgba(6,10,20,0.95);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-  }
-  #form-container.open { display: flex; }
-  .form-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(10,18,35,0.9);
-  }
-  .form-header-title { font-weight: 700; font-size: 16px; }
-  .close-btn {
-    background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
-    border-radius: 10px; color: #ef4444;
-    padding: 8px 16px; cursor: pointer;
-    font-family: 'Tajawal', sans-serif; font-size: 14px; font-weight: 700;
-  }
-  .close-btn:hover { background: rgba(239,68,68,0.25); }
-  #form-iframe {
-    flex: 1; border: none;
-    background: #fff;
-  }
-
-  @media (max-width: 480px) {
-    .card { padding: 28px 20px; margin: 12px; }
-  }
-</style>
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  </style>
 </head>
 <body>
+<div id="bg"></div>
 
-<div class="bg-orbs">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-</div>
-<div class="grid-bg"></div>
-
-<!-- Form overlay -->
-<div id="form-container">
-  <div class="form-header">
-    <span class="form-header-title">📋 نموذج الحضور</span>
-    <button class="close-btn" onclick="closeForm()">✕ إغلاق</button>
-  </div>
-  <iframe id="form-iframe" src=""></iframe>
-</div>
-
-<div class="card">
-
-  <div class="logo-wrap">
-    <div class="logo-icon">📍</div>
-    <div>
-      <div class="logo-text">تحضير الموظفين</div>
-      <div class="logo-sub">يُفعَّل عند التواجد في الموقع فقط</div>
-    </div>
+<div class="wrapper">
+  <div class="header">
+    <h1>نظام الحضور والانصراف</h1>
+    <div id="clock"></div>
   </div>
 
-  <div class="divider"></div>
-
-  <div class="datetime-bar">
-    <div class="dt-pill">
-      <div class="label">التاريخ</div>
-      <div class="value" id="date-val">—</div>
+  <div class="cards">
+    <div class="card checkin" id="card-checkin" onclick="go('checkin')">
+      <div class="card-icon">✅</div>
+      <div class="card-title">تسجيل الحضور</div>
+      <div class="card-sub" id="sub-checkin"></div>
+      <div class="time-badge" id="badge-checkin"></div>
+      <div class="card-time" id="time-checkin"></div>
     </div>
-    <div class="dt-pill">
-      <div class="label">الوقت</div>
-      <div class="value" id="time-val">—</div>
+
+    <div class="card checkout" id="card-checkout" onclick="go('checkout')">
+      <div class="card-icon">🚪</div>
+      <div class="card-title">تسجيل الانصراف</div>
+      <div class="card-sub" id="sub-checkout"></div>
+      <div class="time-badge" id="badge-checkout"></div>
+      <div class="card-time" id="time-checkout"></div>
     </div>
   </div>
-
-  <!-- Mode tabs -->
-  <div style="display:flex;gap:0;margin-bottom:20px;border-radius:14px;overflow:hidden;border:1px solid var(--border);">
-    <button id="tab-in" onclick="setMode('in')" style="flex:1;padding:13px 0;border:none;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;background:linear-gradient(135deg,#065f46,#10b981);color:#fff;transition:all .2s;">
-      🟢 حضور
-    </button>
-    <button id="tab-out" onclick="setMode('out')" style="flex:1;padding:13px 0;border:none;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;background:rgba(255,255,255,0.04);color:rgba(240,244,255,0.45);transition:all .2s;">
-      🔴 انصراف
-    </button>
-  </div>
-
-  <div id="state-display">
-    <div class="state-icon">📋</div>
-    <div class="state-title">جاهز للتحقق</div>
-    <div class="state-desc">اضغط الزر أدناه للتحقق من موقعك وتسجيل الحضور</div>
-  </div>
-
-  <button class="btn btn-primary" id="check-btn" onclick="checkLocation()">
-    📡 تحقق من موقعي وسجّل حضوري
-  </button>
-
-  <div class="config-toggle">
-    <button class="config-btn" onclick="toggleConfig()">⚙️ إعدادات الموقع والنموذج</button>
-  </div>
-
-  <div class="config-panel" id="config-panel">
-    <div class="config-title">⚙️ إعدادات المدير</div>
-    <div class="field" style="display:flex;align-items:center;justify-content:space-between;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;">
-      <span style="color:#fbbf24;font-size:13px;font-weight:700;">🧪 وضع الاختبار (بدون GPS)</span>
-      <input type="checkbox" id="cfg-test-mode" onchange="saveTestMode(this.checked)" style="width:20px;height:20px;cursor:pointer;accent-color:#f59e0b;">
-    </div>
-    <div class="field">
-      <label>رابط Google Form — الحضور</label>
-      <input type="url" id="cfg-form-url" placeholder="https://docs.google.com/forms/..." />
-    </div>
-    <div class="field">
-      <label>رابط Google Form — الانصراف</label>
-      <input type="url" id="cfg-form-url-out" placeholder="https://docs.google.com/forms/..." />
-    </div>
-    <div class="field">
-      <label>خط العرض (Latitude)</label>
-      <input type="number" id="cfg-lat" step="any" placeholder="24.7136" />
-    </div>
-    <div class="field">
-      <label>خط الطول (Longitude)</label>
-      <input type="number" id="cfg-lng" step="any" placeholder="46.6753" />
-    </div>
-    <div class="field">
-      <label>النطاق المسموح (متر)</label>
-      <input type="number" id="cfg-radius" placeholder="200" />
-    </div>
-    <div style="height:1px;background:rgba(255,255,255,0.07);margin:14px 0;"></div>
-    <div style="font-size:12px;color:rgba(240,244,255,0.45);font-weight:700;margin-bottom:10px;">⏰ أوقات التسجيل المسموحة</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      <div class="field" style="margin:0">
-        <label>بداية الحضور</label>
-        <input type="time" id="cfg-in-start" value="08:00" />
-      </div>
-      <div class="field" style="margin:0">
-        <label>نهاية الحضور</label>
-        <input type="time" id="cfg-in-end" value="09:00" />
-      </div>
-      <div class="field" style="margin:0">
-        <label>بداية الانصراف</label>
-        <input type="time" id="cfg-out-start" value="16:00" />
-      </div>
-      <div class="field" style="margin:0">
-        <label>نهاية الانصراف</label>
-        <input type="time" id="cfg-out-end" value="17:00" />
-      </div>
-    </div>
-    <button class="save-btn" onclick="saveConfig()" style="margin-top:14px;">💾 حفظ الإعدادات</button>
-  </div>
-
 </div>
 
 <script>
-
-
-  function updateAttendanceSystem() {
-    const now = new Date();
-    const hours = now.getHours(); // يجلب الساعة (من 0 إلى 23)
-
-    const btn = document.getElementById('attendanceBtn');
-    const msg = document.getElementById('message');
-
-    // الشرط: يبدأ الساعة 8 صباحاً ويغلق تمام الساعة 9:00:00
-    if (hours >= 8 && hours < 9) {
-        btn.disabled = false;
-        btn.className = "enabled";
-        btn.innerText = "سجل حضورك الآن";
-        msg.innerText = "التحضير متاح الآن (يغلق الساعة 9:00)";
-        msg.style.color = "#28a745";
-    } else {
-        btn.disabled = true;
-        btn.className = "disabled";
-        
-        if (hours < 8) {
-            btn.innerText = "التحضير لم يبدأ";
-            msg.innerText = "يفتح التحضير الساعة 8:00 صباحاً";
-        } else {
-            btn.innerText = "انتهى وقت التحضير";
-            msg.innerText = "تم إغلاق التحضير الساعة 9:00 صباحاً";
-        }
-        msg.style.color = "#d9534f";
-    }
-}
-  // ── Default config (change these) ──────────────────────
-  let CONFIG = {
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe_DEMO_REPLACE_THIS/viewform",
-    formUrlOut: "https://docs.google.com/forms/d/e/1FAIpQLSe_DEMO_REPLACE_THIS_OUT/viewform",
-    lat: 24.7136,
-    lng: 46.6753,
-    radius: 200,
-    inStart: "08:00",
-    inEnd: "09:00",
-    outStart: "16:00",
-    outEnd: "17:00",
+  // ============================================================
+  //  ⏰ عدّل التوقيتات هنا — الصيغة 24 ساعة
+  // ============================================================
+  const TIMES = {
+    checkin: {
+      start: { h: 7,  m: 0 },   // ← بداية وقت الحضور
+      end:   { h: 9,  m: 0 },   // ← نهاية وقت الحضور
+    },
+    checkout: {
+      start: { h: 16, m: 0 },   // ← بداية وقت الانصراف
+      end:   { h: 18, m: 0 },   // ← نهاية وقت الانصراف
+    },
   };
 
-  let currentMode = "in"; // "in" = حضور | "out" = انصراف
+  const URLS = {
+    checkin:  'https://forms.gle/ykv99FbvJip7Fhp99',
+    checkout: 'https://forms.gle/FsHitkRbXJizgbZJ8',
+  };
+  // ============================================================
 
-  function setMode(mode) {
-    currentMode = mode;
-    const tabIn = document.getElementById("tab-in");
-    const tabOut = document.getElementById("tab-out");
-    const btn = document.getElementById("check-btn");
+  function toMin(h, m) { return h * 60 + m; }
 
-    if (mode === "in") {
-      tabIn.style.background = "linear-gradient(135deg,#065f46,#10b981)";
-      tabIn.style.color = "#fff";
-      tabOut.style.background = "rgba(255,255,255,0.04)";
-      tabOut.style.color = "rgba(240,244,255,0.45)";
-      btn.textContent = "📡 تحقق من موقعي وسجّل حضوري";
-    } else {
-      tabOut.style.background = "linear-gradient(135deg,#7c2d12,#ef4444)";
-      tabOut.style.color = "#fff";
-      tabIn.style.background = "rgba(255,255,255,0.04)";
-      tabIn.style.color = "rgba(240,244,255,0.45)";
-      btn.textContent = "📡 تحقق من موقعي وسجّل انصرافي";
-    }
-    showState("idle");
-    btn.disabled = false;
-  }
-
-  // Load saved config
-  try {
-    const saved = localStorage.getItem("att_config");
-    if (saved) CONFIG = { ...CONFIG, ...JSON.parse(saved) };
-  } catch(e) {}
-
-  let testMode = false;
-  try { testMode = JSON.parse(localStorage.getItem('att_test_mode') || 'false'); } catch(e) {}
-
-  function saveTestMode(val) {
-    testMode = val;
-    try { localStorage.setItem('att_test_mode', JSON.stringify(val)); } catch(e) {}
-  }
-
-  // Populate config fields
-  function loadConfigFields() {
-    document.getElementById("cfg-form-url").value = CONFIG.formUrl || "";
-    document.getElementById("cfg-form-url-out").value = CONFIG.formUrlOut || "";
-    document.getElementById("cfg-lat").value = CONFIG.lat || "";
-    document.getElementById("cfg-lng").value = CONFIG.lng || "";
-    document.getElementById("cfg-radius").value = CONFIG.radius || "";
-  }
-  loadConfigFields();
-
-  function saveConfig() {
-    CONFIG.formUrl = document.getElementById("cfg-form-url").value.trim();
-    CONFIG.formUrlOut = document.getElementById("cfg-form-url-out").value.trim();
-    CONFIG.lat = parseFloat(document.getElementById("cfg-lat").value) || CONFIG.lat;
-    CONFIG.lng = parseFloat(document.getElementById("cfg-lng").value) || CONFIG.lng;
-    CONFIG.radius = parseInt(document.getElementById("cfg-radius").value) || CONFIG.radius;
-    try { localStorage.setItem("att_config", JSON.stringify(CONFIG)); } catch(e) {}
-    document.getElementById("config-panel").classList.remove("open");
-    showState("idle");
-    alert("✅ تم حفظ الإعدادات");
-  }
-
-  function toggleConfig() {
-    document.getElementById("config-panel").classList.toggle("open");
-  }
-
-  // ── Date / Time ─────────────────────────────────────────
-  function updateClock() {
+  function isOpen(type) {
     const now = new Date();
-    document.getElementById("date-val").textContent =
-      now.toLocaleDateString("ar-SA", { day: "numeric", month: "short", weekday: "short" });
-    document.getElementById("time-val").textContent =
-      now.toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  }
-  updateClock();
-  setInterval(updateClock, 1000);
-
-  // ── Haversine ───────────────────────────────────────────
-  function distance(lat1, lng1, lat2, lng2) {
-    const R = 6371000, dL = (lat2-lat1)*Math.PI/180, dN = (lng2-lng1)*Math.PI/180;
-    const a = Math.sin(dL/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dN/2)**2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const cur = toMin(now.getHours(), now.getMinutes());
+    const s   = toMin(TIMES[type].start.h, TIMES[type].start.m);
+    const e   = toMin(TIMES[type].end.h,   TIMES[type].end.m);
+    return cur >= s && cur <= e;
   }
 
-  // ── State UI ────────────────────────────────────────────
-  function showState(type, extra = {}) {
-    const el = document.getElementById("state-display");
-    el.className = "";
-    const isOut = currentMode === "out";
+  function fmt(h, m) {
+    const s = h < 12 ? 'ص' : 'م';
+    const hh = h % 12 || 12;
+    return `${hh}:${String(m).padStart(2,'0')} ${s}`;
+  }
 
-    const states = {
-      idle: {
-        icon: isOut ? "🔴" : "📋",
-        title: isOut ? "تسجيل الانصراف" : "جاهز للتحقق",
-        desc: isOut ? "اضغط الزر للتحقق من موقعك وتسجيل انصرافك" : "اضغط الزر أدناه للتحقق من موقعك وتسجيل الحضور",
-        cls: ""
-      },
-      checking: {
-        icon: null, title: "جاري تحديد موقعك...",
-        desc: "يرجى السماح بالوصول إلى الموقع عند الطلب",
-        cls: "checking"
-      },
-      success: {
-        icon: "✅",
-        title: isOut ? "تم التحقق — سيفتح نموذج الانصراف" : "أنت داخل نطاق العمل!",
-        desc: `تم التحقق — أنت على بُعد <strong>${extra.dist || 0} متر</strong> من الموقع<br>يفتح النموذج الآن...`,
-        cls: "success"
-      },
-      outside: {
-        icon: "🚫", title: "أنت خارج نطاق العمل",
-        desc: `مسافتك عن الموقع: <strong>${extra.dist || 0} متر</strong><br>النطاق المسموح: ${CONFIG.radius} متر فقط`,
-        cls: "error"
-      },
-      wrong_time: {
-        icon: "⏰", title: currentMode === "in" ? "ليس وقت الحضور" : "ليس وقت الانصراف",
-        desc: `وقت التسجيل المسموح: <strong>${currentMode === "in" ? (CONFIG.inStart + " – " + CONFIG.inEnd) : (CONFIG.outStart + " – " + CONFIG.outEnd)}</strong>`,
-        cls: "error"
-      },
-      gps_error: {
-        icon: "📵", title: "تعذّر تحديد الموقع",
-        desc: "تأكد من تفعيل GPS وإعطاء الصلاحية للمتصفح ثم حاول مجدداً",
-        cls: "error"
-      },
-    };
+  function updateCards() {
+    ['checkin','checkout'].forEach(type => {
+      const card  = document.getElementById('card-' + type);
+      const badge = document.getElementById('badge-' + type);
+      const sub   = document.getElementById('sub-' + type);
+      const timeEl= document.getElementById('time-' + type);
+      const t     = TIMES[type];
+      const open  = isOpen(type);
 
-    const s = states[type] || states.idle;
-    if (s.cls) el.classList.add(s.cls);
+      timeEl.textContent = `${fmt(t.start.h, t.start.m)} — ${fmt(t.end.h, t.end.m)}`;
 
-    if (type === "checking") {
-      el.innerHTML = `
-        <div class="gps-ring">
-          <div class="gps-ring-inner">📡</div>
-        </div>
-        <div class="state-title">${s.title}</div>
-        <div class="state-desc">${s.desc}</div>
-      `;
-    } else {
-      let meterHTML = "";
-      if (type === "success" || type === "outside") {
-        const pct = Math.min(100, Math.round((extra.dist / (CONFIG.radius * 3)) * 100));
-        const barColor = type === "success"
-          ? "linear-gradient(90deg, #10b981, #06b6d4)"
-          : "linear-gradient(90deg, #f59e0b, #ef4444)";
-        meterHTML = `
-          <div class="dist-meter">
-            <span style="font-size:18px">${type === "success" ? "📍" : "🗺️"}</span>
-            <div class="dist-bar-wrap">
-              <div class="dist-bar" style="width:${pct}%; background:${barColor}"></div>
-            </div>
-            <span class="dist-val">${extra.dist}م / ${CONFIG.radius}م</span>
-          </div>`;
+      if (open) {
+        card.classList.remove('disabled');
+        badge.className = 'time-badge open';
+        badge.textContent = '🟢 مفتوح الآن';
+        sub.textContent = type === 'checkin'
+          ? 'اضغط للانتقال لنموذج الحضور'
+          : 'اضغط للانتقال لنموذج الانصراف';
+      } else {
+        card.classList.add('disabled');
+        badge.className = 'time-badge closed';
+        badge.textContent = '🔴 خارج وقت التسجيل';
+        sub.textContent = type === 'checkin'
+          ? 'وقت الحضور انتهى أو لم يبدأ بعد'
+          : 'وقت الانصراف انتهى أو لم يبدأ بعد';
       }
-      el.innerHTML = `
-        <div class="state-icon">${s.icon}</div>
-        <div class="state-title">${s.title}</div>
-        <div class="state-desc">${s.desc}</div>
-        ${meterHTML}
-      `;
-    }
+    });
   }
 
-  // ── Time window check ──────────────────────────────────
-  function isWithinTimeWindow() {
-    const now = new Date();
-    const hhmm = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
-    if (currentMode === "in") {
-      return hhmm >= CONFIG.inStart && hhmm <= CONFIG.inEnd;
-    } else {
-      return hhmm >= CONFIG.outStart && hhmm <= CONFIG.outEnd;
-    }
+  function go(type) {
+    if (!isOpen(type)) return;
+    window.location.href = URLS[type];
   }
 
-  function getWindowLabel() {
-    if (currentMode === "in") return `${CONFIG.inStart} – ${CONFIG.inEnd}`;
-    return `${CONFIG.outStart} – ${CONFIG.outEnd}`;
+  function updateClock() {
+    document.getElementById('clock').textContent =
+      new Date().toLocaleDateString('ar-SA', {weekday:'long', year:'numeric', month:'long', day:'numeric'}) +
+      '  |  ' + new Date().toLocaleTimeString('ar-SA');
   }
 
-  // ── Main check ──────────────────────────────────────────
-  function checkLocation() {
-    const btn = document.getElementById("check-btn");
-    btn.disabled = true;
-    showState("checking");
-
-    if (!navigator.geolocation) {
-      showState("gps_error");
-      btn.disabled = false;
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude: lat, longitude: lng } = pos.coords;
-        const dist = Math.round(distance(lat, lng, CONFIG.lat, CONFIG.lng));
-        const inRange = dist <= CONFIG.radius;
-
-        if (inRange) {
-          showState("success", { dist });
-          setTimeout(() => openForm(), 1800);
-        } else {
-          showState("outside", { dist });
-          btn.disabled = false;
-        }
-      },
-      () => {
-        showState("gps_error");
-        btn.disabled = false;
-      },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
-    );
-  }
-
-  // ── Form ────────────────────────────────────────────────
-  function openForm() {
-    const url = currentMode === "out" ? CONFIG.formUrlOut : CONFIG.formUrl;
-    const label = currentMode === "out" ? "نموذج الانصراف" : "نموذج الحضور";
-    const isDemo = !url || url.includes("DEMO_REPLACE");
-
-    document.getElementById("form-container").querySelector(".form-header-title").textContent = `📋 ${label}`;
-
-    if (isDemo) {
-      const fc = document.getElementById("form-container");
-      fc.classList.add("open");
-      document.getElementById("form-iframe").srcdoc = `
-        <html dir="rtl"><body style="font-family:Tajawal,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;background:#f8fafc;margin:0">
-        <div style="text-align:center;padding:40px">
-          <div style="font-size:60px;margin-bottom:16px">${currentMode === "out" ? "🔴" : "✅"}</div>
-          <h2 style="color:#1d4ed8;font-size:24px;margin-bottom:8px">نموذج ${label} — تجريبي</h2>
-          <p style="color:#666;font-size:16px">ضع رابط Google Form الخاص بك في الإعدادات<br>وسيُفتح هنا مباشرة للموظف</p>
-        </div></body></html>`;
-      return;
-    }
-    document.getElementById("form-iframe").src = url;
-    document.getElementById("form-container").classList.add("open");
-  }
-
-  function closeForm() {
-    document.getElementById("form-container").classList.remove("open");
-    document.getElementById("form-iframe").src = "";
-    document.getElementById("check-btn").disabled = false;
-    showState("idle");
-  }
+  updateClock();
+  updateCards();
+  setInterval(updateClock, 1000);
+  setInterval(updateCards, 30000);
 </script>
 </body>
 </html>
