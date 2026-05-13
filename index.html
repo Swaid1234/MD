@@ -200,6 +200,35 @@
 </div>
 
 <script>
+
+  function updateAttendanceSystem() {
+    const now = new Date();
+    const hours = now.getHours(); // يجلب الساعة (من 0 إلى 23)
+
+    const btn = document.getElementById('attendanceBtn');
+    const msg = document.getElementById('message');
+
+    // الشرط: يبدأ الساعة 8 صباحاً ويغلق تمام الساعة 9:00:00
+    if (hours >= 8 && hours < 9) {
+        btn.disabled = false;
+        btn.className = "enabled";
+        btn.innerText = "سجل حضورك الآن";
+        msg.innerText = "التحضير متاح الآن (يغلق الساعة 9:00)";
+        msg.style.color = "#28a745";
+    } else {
+        btn.disabled = true;
+        btn.className = "disabled";
+        
+        if (hours < 8) {
+            btn.innerText = "التحضير لم يبدأ";
+            msg.innerText = "يفتح التحضير الساعة 8:00 صباحاً";
+        } else {
+            btn.innerText = "انتهى وقت التحضير";
+            msg.innerText = "تم إغلاق التحضير الساعة 9:00 صباحاً";
+        }
+        msg.style.color = "#d9534f";
+    }
+}
   // ============================================================
   //  الإعدادات الثابتة — لا تظهر للمستخدم
   // ============================================================
