@@ -474,7 +474,106 @@ h2 {
     
     <!-- الحاوية الداخلية لعناصر الصفحات والتحكم -->
     <div class="card-content">
-        
+      <!-- ================= الصفحة الأولى: اختيار المشعر ================= -->
+        <div id="page-1" class="fade-active">
+            <h2>بوابة التحقق الذكي</h2>
+            <p>مرحباً بك في المنظومة الرقمية للحج، يرجى اختيار مشعر تواجدك الحالي لبدء مطابقة الإحداثيات:</p>
+            
+            <div class="btn-vertical">
+                <button class="btn btn-arfa" onclick="selectLocation(0)">مَشعر عرفات</button>
+                <button class="btn btn-mina" onclick="selectLocation(1)">مَشعر مِنى</button>
+            </div>
+            <div id="status-message"></div>
+        </div>
+
+        <!-- ================= الصفحة الثانية: الحضور والانصراف الرقمي ================= -->
+        <div id="page-2">
+            <h2>بوابة التحضير الرقمية</h2>
+            <div id="active-location" class="location-badge"></div>
+            <p>تم إثبات هويتك المكانية بنجاح عبر الأقمار الصناعية، يرجى تسجيل الإجراء المطلوب:</p>
+            
+            <div class="btn-group">
+                <button class="btn btn-attendance" onclick="redirectToForm('attendance')">إثبات حضور</button>
+                <button class="btn btn-departure" onclick="redirectToForm('departure')">إثبات انصراف</button>
+            </div>
+
+            <button class="btn btn-back" onclick="goBack()">← العودة لتغيير الموقع</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const LOCATIONS = [
+        { name: "مشعر عرفة", lat: 21.3547, lng: 39.9831 }, 
+        { name: "مشعر منى", lat: 21.4164, lng: 39.8920 }   
+    ];
+    const ALLOWED_RADIUS = 500; 
+
+    const ATTENDANCE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf_ATTENDANCE_LINK/viewform";
+    const DEPARTURE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf_DEPARTURE_LINK/viewform";
+
+    const statusDiv = document.getElementById('status-message');
+    const page1 = document.getElementById('page-1');
+    const page2 = document.getElementById('page-2');
+    const activeLocationBadge = document.getElementById('active-location');
+
+    function selectLocation(index) {
+        const targetLocation = LOCATIONS[index];
+        if (!navigator.geolocation) {
+            statusDiv.className = "error-text";
+            statusDiv.innerHTML = "النظام لا يدعم ميزة تحديد الموقع الجغرافي.";
+            return;
+        }
+
+        statusDiv.className = "loading-text";
+        statusDiv.innerHTML = `جاري استدعاء القمر الصناعي لمطابقة [${targetLocation.name}]...`;
+
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const distance = calculateDistance(position.coords.latitude, position.coords.longitude, targetLocation.lat, targetLocation.lng);
+                if (distance <= ALLOWED_RADIUS) {
+                    statusDiv.innerHTML = "";
+                    page1.style.display = "none";
+                    page2.style.display = "block";
+                    page2.classList.add("fade-active"); 
+                    activeLocationBadge.innerHTML = `📍 النطاق النشط: ${targetLocation.name}`;
+                } else {
+                    statusDiv.className = "error-text";
+                    statusDiv.innerHTML = `عذراً، نظام التحقق يؤكد عدم تواجدك حالياً في ${targetLocation.name}.`;
+                }
+            },
+            function(error) {
+                statusDiv.className = "error-text";
+                statusDiv.innerHTML = error.code === error.PERMISSION_DENIED ? "يرجى منح المتصفح صلاحية الـ GPS لإتمام الفحص." : "تعذر الاتصال بـ GPS، يرجى تفعيل خدمة الموقع في الهاتف.";
+            },
+            { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+        );
+    }
+
+    function goBack() {
+        page2.style.display = "none";
+        page2.classList.remove("fade-active");
+        page1.style.display = "block";
+        page1.classList.add("fade-active");
+        statusDiv.innerHTML = "";
+    }
+
+    function redirectToForm(action) {
+        window.location.replace(action === 'attendance' ? ATTENDANCE_FORM_URL : DEPARTURE_FORM_URL);
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371e3; 
+        const phi1 = lat1 * Math.PI / 180;
+        const phi2 = lat2 * Math.PI / 180;
+        const deltaPhi = (lat2 - lat1) * Math.PI / 180;
+        const deltaLambda = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) + Math.cos(phi1) * Math.cos(phi2) * Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))); 
+    }
+</script>
+</body>
+</html>   
         <!-- ================= الصفحة الأولى: اختيار المشعر الجغرافي ================= -->
         <div id="page-1" class="fade-active">
             <h2>بوابة التحقق الذكي</h2>
