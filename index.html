@@ -13,43 +13,43 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* خلفية سينمائية تفاعلية متحركة ناعمة تناسب الأجواء الروحانية الرقمية */
+        /* الخلفية العامة مدمجة مع الرابط الرسمي للوزارة بالتأثير الضبابي */
         body {
-            background: #060709 linear-gradient(125deg, #060709 0%, #0b111e 50%, #050a12 100%);
-            background-size: 200% 200%;
-            animation: ambientBg 15s ease infinite;
+            background-image: url('https://haj.gov.sa/_next/image?url=https%3A%2F%2Fhaj.gov.sa%2Fs-core%2F-%2Fmedia%2FProject%2FHAJJ%2FIMAGES%2FHAJJ-Season%2F33.png%3Fh%3D1964%26iar%3D0%26w%3D5760%26hash%3D38E198558D91D8FE53D5DE53EA558C8B&w=3840&q=75');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
             position: relative;
+            background-color: #060709;
         }
 
-        /* إضاءة خلفية دائرية ناعمة لتعزيز عمق الشاشة */
-        body::after {
+        /* طبقة الـ Blur والظلام الفاخر لدمج المحتوى وإبراز الهوية الداكنة */
+        body::before {
             content: "";
             position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, rgba(0,0,0,0) 70%);
-            top: 15%;
-            left: 20%;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(6, 7, 9, 0.35) 0%, rgba(6, 7, 9, 0.8) 100%);
+            backdrop-filter: blur(10px); /* فلتر ضبابي ناعم للخلفية */
+            -webkit-backdrop-filter: blur(10px);
             z-index: 1;
-            pointer-events: none;
         }
 
-        /* حاوية التصميم المستقبلية الفاخرة (The Cyber-Shell Container) */
+        /* حاوية التصميم المستقبلية الفاخرة الممتصة لألوان الخلفية الرسمية */
         .container {
             position: relative;
             z-index: 2;
-            background: rgba(13, 17, 23, 0.75);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            background: rgba(13, 17, 23, 0.72); 
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 50px 40px;
             border-radius: 32px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 
                         inset 0 1px 0 rgba(255, 255, 255, 0.1);
             text-align: center;
             max-width: 420px;
@@ -57,19 +57,19 @@
             animation: superFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* شعار السنة الهجرية الفخم */
+        /* شعار السنة الهجرية الفخم بتناسق مع هوية الحج */
         .hajj-badge {
             display: inline-block;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #c9a0dc; /* لون بنفسجي ملكي مطفي */
-            background: rgba(201, 160, 220, 0.1);
+            color: #d4af37; /* لون ذهبي ملكي متناسق مع كسوة الكعبة */
+            background: rgba(212, 175, 55, 0.1);
             padding: 6px 16px;
             border-radius: 50px;
             margin-bottom: 20px;
             font-weight: 700;
-            border: 1px solid rgba(201, 160, 220, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.25);
         }
 
         h2 {
@@ -108,11 +108,11 @@
             flex-direction: row;
         }
 
-        /* الأزرار بتصميم خطي مضيء غاية في الفخامة */
+        /* الأزرار بتصميم خطي مضيء فخم جداً */
         .btn {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 18px;
             font-size: 16px;
             border-radius: 20px;
@@ -122,7 +122,6 @@
             position: relative;
         }
 
-        /* تأثير الحركة والتحول للأزرار عند التمرير (Hover) */
         .btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
@@ -132,7 +131,7 @@
             transform: translateY(-1px);
         }
 
-        /* تخصيص أزرار المشاعر بهوية ضوئية متفردة */
+        /* توهج احترافي لأزرار المشاعر المقدسة */
         .btn-arfa:hover { 
             background: linear-gradient(135deg, #00b4d8, #0077b6);
             border-color: #00b4d8;
@@ -145,9 +144,9 @@
             box-shadow: 0 15px 30px rgba(114, 9, 183, 0.35);
         }
         
-        /* أزرار الحضور والانصراف بتصميم زجاجي نيون ممتد */
+        /* تدرج النيون الفخم لأزرار الحضور والانصراف الرقمية */
         .btn-attendance { 
-            background: linear-gradient(135deg, rgba(17, 153, 142, 0.2), rgba(56, 239, 125, 0.2)); 
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.15), rgba(56, 239, 125, 0.15)); 
             border: 1px solid rgba(56, 239, 125, 0.4);
             color: #38ef7d;
             flex: 1; 
@@ -170,11 +169,11 @@
             box-shadow: 0 15px 30px rgba(234, 141, 141, 0.3);
         }
 
-        /* زر العودة الذكي اللطيف */
+        /* تصميم زر العودة الشفاف الفاخر */
         .btn-back {
             background: transparent;
             border: none;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.45);
             margin-top: 30px;
             font-size: 14px;
             text-decoration: none;
@@ -188,7 +187,7 @@
             box-shadow: none;
         }
 
-        /* رسائل الحالة الذكية بنظام نيون فخم */
+        /* رسائل الحالة المتوهجة المتوافقة مع الـ Dark Mode */
         #status-message {
             margin-top: 25px;
             font-size: 14px;
@@ -207,7 +206,7 @@
             text-shadow: 0 0 20px rgba(0, 180, 216, 0.5);
         }
         
-        /* شارة الموقع النشط بطابع مستقبلي أنيق */
+        /* شارة النطاق والتحقق الجغرافي النشط */
         .location-badge {
             display: inline-block;
             background: rgba(0, 180, 216, 0.08);
@@ -221,13 +220,7 @@
             box-shadow: 0 0 15px rgba(0, 180, 216, 0.1);
         }
 
-        /* ================= الحركات الـ Animations الجمالية ================= */
-        @keyframes ambientBg {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* منحنيات الحركات والظهور التدريجي */
         @keyframes superFadeIn {
             from { opacity: 0; transform: translateY(50px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -279,7 +272,7 @@
 </div>
 
 <script>
-     // ========================================================
+  // ========================================================
     // 1. إعدادات الإحداثيات اليدوية (عرفة ومنى)
     // ========================================================
     const LOCATIONS = [
@@ -295,7 +288,6 @@
     const ATTENDANCE_FORM_URL = "https://forms.gle/6pUtD5bcLRYJV18Z8";
     const DEPARTURE_FORM_URL = "https://forms.gle/Hn2ysDaE5TP6pwn17";
     // ========================================================
-
     const statusDiv = document.getElementById('status-message');
     const page1 = document.getElementById('page-1');
     const page2 = document.getElementById('page-2');
