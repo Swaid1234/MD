@@ -1,4 +1,253 @@
- <!-- ================= الصفحة الأولى: اختيار المشعر ================= -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة المشاعر الرقمية - حج 1447هـ</title>
+    <style>
+        /* الخطوط وتصفير الإعدادات */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* الخلفية العامة للموقع بالصورة المطلوبة */
+        body {
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20241127/pngtree-holy-hajj-and-umrah-pilgrimage-at-kaaba-in-mecca-for-eid-image_16673644.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background-color: #060709;
+        }
+
+        /* طبقة الـ Blur الفاخرة للخلفية فقط (معزولة تماماً عن المربع) */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(6, 7, 9, 0.45) 0%, rgba(6, 7, 9, 0.85) 100%);
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1;
+        }
+
+        /* مربع اختيار المشعر - نقي بدون بلور نهائياً لتجنب مشاكل الجوال */
+        .container {
+            position: relative;
+            z-index: 2;
+            background: rgba(13, 17, 23, 0.93); /* لون داكن صريح ونقي بدون ضبابية */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            max-width: 420px;
+            width: 92%;
+            overflow: hidden; 
+            
+            /* أنميشن خفيف وسريع جداً متوافق مع كروت شاشة الجوالات */
+            will-change: transform, opacity;
+            animation: superFadeIn 0.5s ease-out forwards;
+        }
+
+        /* الحاوية الداخلية للمحتوى */
+        .card-content {
+            padding: 35px 25px 45px 25px;
+        }
+
+        /* قسم الصورة المدمجة أعلى الكرت */
+        .featured-image-holder {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20241127/pngtree-holy-hajj-and-umrah-pilgrimage-at-kaaba-in-mecca-for-eid-image_16673644.jpg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* تظليل ناعم فوق الصورة */
+        .featured-image-holder::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; right: 0; top: 0;
+            background: linear-gradient(to bottom, rgba(13, 17, 23, 0) 0%, rgba(13, 17, 23, 0.8) 100%);
+        }
+
+        /* شعار السنة الهجرية */
+        .hajj-badge {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            z-index: 3;
+            font-size: 11px;
+            color: #d4af37; 
+            background: #0d1117;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(180deg, #ffffff 0%, #bdc3c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* إعدادات الصفحات والتنقل */
+        #page-1 { display: block; }
+        #page-2 { display: none; }
+
+        .fade-active {
+            will-change: transform, opacity;
+            animation: pageTransition 0.4s ease-out forwards;
+        }
+
+        .btn-vertical, .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .btn-group {
+            flex-direction: row;
+        }
+
+        /* الأزرار الفاخرة */
+        .btn {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 18px;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            -webkit-transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+        }
+
+        /* استجابة سريعة جداً عند اللمس في الجوال */
+        .btn:hover, .btn:active {
+            transform: translateY(-2px);
+        }
+
+        .btn-arfa:hover, .btn-arfa:active { 
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
+            border-color: #00b4d8;
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+        }
+
+        .btn-mina:hover, .btn-mina:active { 
+            background: linear-gradient(135deg, #7209b7, #560bad);
+            border-color: #7209b7;
+            box-shadow: 0 10px 20px rgba(114, 9, 183, 0.3);
+        }
+        
+        .btn-attendance { 
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.15), rgba(56, 239, 125, 0.15)); 
+            border: 1px solid rgba(56, 239, 125, 0.4);
+            color: #38ef7d;
+            flex: 1; 
+        }
+        .btn-attendance:hover, .btn-attendance:active { 
+            background: linear-gradient(135deg, #11998e, #38ef7d); 
+            color: #ffffff;
+            box-shadow: 0 10px 20px rgba(56, 239, 125, 0.25);
+        }
+
+        .btn-departure { 
+            background: linear-gradient(135deg, rgba(234, 141, 141, 0.15), rgba(187, 62, 3, 0.15)); 
+            border: 1px solid rgba(234, 141, 141, 0.4);
+            color: #ea8d8d;
+            flex: 1; 
+        }
+        .btn-departure:hover, .btn-departure:active { 
+            background: linear-gradient(135deg, #ea8d8d, #bb3e03); 
+            color: #ffffff;
+            box-shadow: 0 10px 20px rgba(234, 141, 141, 0.25);
+        }
+
+        /* زر العودة */
+        .btn-back {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 35px;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        #status-message {
+            margin-top: 25px;
+            font-size: 14px;
+            min-height: 24px;
+        }
+        
+        .error-text { color: #ff4d4d !important; animation: shake 0.4s ease-in-out; }
+        .loading-text { color: #00b4d8 !important; }
+        
+        .location-badge {
+            display: inline-block;
+            background: rgba(0, 180, 216, 0.08);
+            color: #00b4d8;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            border: 1px solid rgba(0, 180, 216, 0.25);
+        }
+
+        /* حركات ناعمة وخطية متوافقة تماماً مع متصفحات الجوال */
+        @keyframes superFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pageTransition {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- قسم الصورة المدمجة أعلى المربع بدون بلور لتظهر واضحة جداً -->
+    <div class="featured-image-holder">
+        <div class="hajj-badge">المشاعر المقدسة ١٤٤٧هـ</div>
+    </div>
+    
+    <div class="card-content">
+        <!-- ================= الصفحة الأولى: اختيار المشعر ================= -->
         <div id="page-1" class="fade-active">
             <h2>بوابة التحقق الذكي</h2>
             <p>مرحباً بك في المنظومة الرقمية للحج، يرجى اختيار مشعر تواجدك الحالي لبدء مطابقة الإحداثيات:</p>
@@ -10,7 +259,7 @@
             <div id="status-message"></div>
         </div>
 
-        <!-- ================= الصفحة الثانية: الحضور والانصراف الرقمي ================= -->
+        <!-- ================= الصفحة الثانية: الحضور والانصراف ================= -->
         <div id="page-2">
             <h2>بوابة التحضير الرقمية</h2>
             <div id="active-location" class="location-badge"></div>
@@ -27,14 +276,22 @@
 </div>
 
 <script>
+    // ========================================================
+    // 1. إعدادات الإحداثيات اليدوية (عرفة ومنى)
+    // ========================================================
     const LOCATIONS = [
-        { name: "مشعر عرفة", lat: 21.3547, lng: 39.9831 }, 
-        { name: "مشعر منى", lat: 21.4164, lng: 39.8920 }   
+        { name: "مشعر عرفة", lat: 21.338251, lng:39.994099 }, 
+        { name: "مشعر منى", lat: 21.41619632962374, lng:39.88574198075799 }   
     ];
-    const ALLOWED_RADIUS = 500; 
 
-    const ATTENDANCE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf_ATTENDANCE_LINK/viewform";
-    const DEPARTURE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf_DEPARTURE_LINK/viewform";
+    const ALLOWED_RADIUS = 50000000; // النطاق المسموح بالمتر
+
+    // ========================================================
+    // 2. روابط قوقل فورم
+    // ========================================================
+    const ATTENDANCE_FORM_URL = "https://forms.gle/6pUtD5bcLRYJV18Z8";
+    const DEPARTURE_FORM_URL = "https://forms.gle/Hn2ysDaE5TP6pwn17";
+    // ========================================================
 
     const statusDiv = document.getElementById('status-message');
     const page1 = document.getElementById('page-1');
