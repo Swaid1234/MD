@@ -13,9 +13,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* الخلفية العامة مدمجة مع الرابط الرسمي للوزارة بالتأثير الضبابي */
+        /* الخلفية العامة للموقع */
         body {
-            background-image: url('https://haj.gov.sa/_next/image?url=https%3A%2F%2Fhaj.gov.sa%2Fs-core%2F-%2Fmedia%2FProject%2FHAJJ%2FIMAGES%2FHAJJ-Season%2F33.png%3Fh%3D1964%26iar%3D0%26w%3D5760%26hash%3D38E198558D91D8FE53D5DE53EA558C8B&w=3840&q=75');
+            background-image: url('https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -28,54 +28,82 @@
             background-color: #060709;
         }
 
-        /* طبقة الـ Blur والظلام الفاخر لدمج المحتوى وإبراز الهوية الداكنة */
+        /* طبقة الـ Blur والظلام الفاخر للخلفية العامة */
         body::before {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle, rgba(6, 7, 9, 0.35) 0%, rgba(6, 7, 9, 0.8) 100%);
-            backdrop-filter: blur(10px); /* فلتر ضبابي ناعم للخلفية */
+            background: radial-gradient(circle, rgba(6, 7, 9, 0.4) 0%, rgba(6, 7, 9, 0.85) 100%);
+            backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px);
             z-index: 1;
         }
 
-        /* حاوية التصميم المستقبلية الفاخرة الممتصة لألوان الخلفية الرسمية */
+        /* حاوية التصميم المستقبلية الفاخرة (The Main Card) */
         .container {
             position: relative;
             z-index: 2;
-            background: rgba(13, 17, 23, 0.72); 
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            background: rgba(13, 17, 23, 0.65); 
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 50px 40px;
             border-radius: 32px;
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 
                         inset 0 1px 0 rgba(255, 255, 255, 0.1);
             text-align: center;
             max-width: 420px;
             width: 92%;
+            overflow: hidden; /* لمنع خروج عناصر الصورة عن انحناء المربع */
             animation: superFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* شعار السنة الهجرية الفخم بتناسق مع هوية الحج */
+        /* الحاوية الداخلية للمحتوى لإضافة مسافات مريحة */
+        .card-content {
+            padding: 40px 30px 50px 30px;
+        }
+
+        /* تصميم قسم الصورة المدمجة داخل المربع */
+        .featured-image-holder {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            background-image: url('https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* تظليل ناعم فوق الصورة الداخلية لإبراز الشعار */
+        .featured-image-holder::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; right: 0; top: 0;
+            background: linear-gradient(to bottom, rgba(13, 17, 23, 0.1) 0%, rgba(13, 17, 23, 0.7) 100%);
+        }
+
+        /* شعار السنة الهجرية الفخم العائم فوق الصورة */
         .hajj-badge {
-            display: inline-block;
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            z-index: 3;
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #d4af37; /* لون ذهبي ملكي متناسق مع كسوة الكعبة */
-            background: rgba(212, 175, 55, 0.1);
+            letter-spacing: 1px;
+            color: #d4af37; 
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             padding: 6px 16px;
             border-radius: 50px;
-            margin-bottom: 20px;
             font-weight: 700;
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            border: 1px solid rgba(212, 175, 55, 0.4);
         }
 
         h2 {
             color: #ffffff;
             margin-bottom: 12px;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             letter-spacing: -0.5px;
             background: linear-gradient(180deg, #ffffff 0%, #bdc3c7 100%);
@@ -84,9 +112,9 @@
         }
 
         p {
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             line-height: 1.6;
         }
 
@@ -108,11 +136,11 @@
             flex-direction: row;
         }
 
-        /* الأزرار بتصميم خطي مضيء فخم جداً */
+        /* الأزرار الفاخرة */
         .btn {
             color: #ffffff;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             padding: 18px;
             font-size: 16px;
             border-radius: 20px;
@@ -127,11 +155,7 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .btn:active {
-            transform: translateY(-1px);
-        }
-
-        /* توهج احترافي لأزرار المشاعر المقدسة */
+        /* توهج أزرار المشاعر المقدسة */
         .btn-arfa:hover { 
             background: linear-gradient(135deg, #00b4d8, #0077b6);
             border-color: #00b4d8;
@@ -144,7 +168,7 @@
             box-shadow: 0 15px 30px rgba(114, 9, 183, 0.35);
         }
         
-        /* تدرج النيون الفخم لأزرار الحضور والانصراف الرقمية */
+        /* تدرج النيون لأزرار الحضور والانصراف الرقمية */
         .btn-attendance { 
             background: linear-gradient(135deg, rgba(17, 153, 142, 0.15), rgba(56, 239, 125, 0.15)); 
             border: 1px solid rgba(56, 239, 125, 0.4);
@@ -169,30 +193,27 @@
             box-shadow: 0 15px 30px rgba(234, 141, 141, 0.3);
         }
 
-        /* تصميم زر العودة الشفاف الفاخر */
+        /* زر العودة الشفاف */
         .btn-back {
             background: transparent;
             border: none;
             color: rgba(255, 255, 255, 0.45);
-            margin-top: 30px;
+            margin-top: 35px;
             font-size: 14px;
             text-decoration: none;
             display: inline-block;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
         .btn-back:hover {
             color: #ffffff;
-            background: transparent;
-            transform: none;
-            box-shadow: none;
         }
 
-        /* رسائل الحالة المتوهجة المتوافقة مع الـ Dark Mode */
+        /* رسائل الحالة المتوهجة */
         #status-message {
             margin-top: 25px;
             font-size: 14px;
             min-height: 24px;
-            transition: all 0.3s ease;
         }
         
         .error-text { 
@@ -206,7 +227,7 @@
             text-shadow: 0 0 20px rgba(0, 180, 216, 0.5);
         }
         
-        /* شارة النطاق والتحقق الجغرافي النشط */
+        /* شارة النطاق الجغرافي النشط */
         .location-badge {
             display: inline-block;
             background: rgba(0, 180, 216, 0.08);
@@ -220,9 +241,9 @@
             box-shadow: 0 0 15px rgba(0, 180, 216, 0.1);
         }
 
-        /* منحنيات الحركات والظهور التدريجي */
+        /* منحنيات الحركات */
         @keyframes superFadeIn {
-            from { opacity: 0; transform: translateY(50px) scale(0.96); }
+            from { opacity: 0; transform: translateY(40px) scale(0.97); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
@@ -241,34 +262,41 @@
 <body>
 
 <div class="container">
-    <div class="hajj-badge">المشاعر المقدسة ١٤٤٧هـ</div>
+    <!-- الجزء العلوي: قسم الصورة المدمجة داخل المربع الفاخر -->
+    <div class="featured-image-holder">
+        <div class="hajj-badge">المشاعر المقدسة ١٤٤٧هـ</div>
+    </div>
     
-    <!-- ================= الصفحة الأولى: اختيار المشعر الجغرافي ================= -->
-    <div id="page-1" class="fade-active">
-        <h2>بوابة التحقق الذكي</h2>
-        <p>مرحباً بك في المنظومة الرقمية للحج، يرجى اختيار مشعر تواجدك الحالي لبدء مطابقة الإحداثيات:</p>
+    <!-- الحاوية الداخلية لعناصر الصفحات والتحكم -->
+    <div class="card-content">
         
-        <div class="btn-vertical">
-            <button class="btn btn-arfa" onclick="selectLocation(0)">مَشعر عرفات</button>
-            <button class="btn btn-mina" onclick="selectLocation(1)">مَشعر مِنى</button>
-        </div>
-        <div id="status-message"></div>
-    </div>
-
-    <!-- ================= الصفحة الثانية: الحضور والانصراف الرقمي ================= -->
-    <div id="page-2">
-        <h2>بوابة التحضير الرقمية</h2>
-        <div id="active-location" class="location-badge"></div>
-        <p>تم إثبات هويتك المكانية بنجاح عبر الأقمار الصناعية، يرجى تسجيل الإجراء المطلوب:</p>
-        
-        <div class="btn-group">
-            <button class="btn btn-attendance" onclick="redirectToForm('attendance')">إثبات حضور</button>
-            <button class="btn btn-departure" onclick="redirectToForm('departure')">إثبات انصراف</button>
+        <!-- ================= الصفحة الأولى: اختيار المشعر الجغرافي ================= -->
+        <div id="page-1" class="fade-active">
+            <h2>بوابة التحقق الذكي</h2>
+            <p>مرحباً بك في المنظومة الرقمية للحج، يرجى اختيار مشعر تواجدك الحالي لبدء مطابقة الإحداثيات:</p>
+            
+            <div class="btn-vertical">
+                <button class="btn btn-arfa" onclick="selectLocation(0)">مَشعر عرفات</button>
+                <button class="btn btn-mina" onclick="selectLocation(1)">مَشعر مِنى</button>
+            </div>
+            <div id="status-message"></div>
         </div>
 
-        <button class="btn btn-back" onclick="goBack()">← العودة لتغيير الموقع</button>
-    </div>
+        <!-- ================= الصفحة الثانية: الحضور والانصراف الرقمي ================= -->
+        <div id="page-2">
+            <h2>بوابة التحضير الرقمية</h2>
+            <div id="active-location" class="location-badge"></div>
+            <p>تم إثبات هويتك المكانية بنجاح عبر الأقمار الصناعية، يرجى تسجيل الإجراء المطلوب:</p>
+            
+            <div class="btn-group">
+                <button class="btn btn-attendance" onclick="redirectToForm('attendance')">إثبات حضور</button>
+                <button class="btn btn-departure" onclick="redirectToForm('departure')">إثبات انصراف</button>
+            </div>
 
+            <button class="btn btn-back" onclick="goBack()">← العودة لتغيير الموقع</button>
+        </div>
+
+    </div>
 </div>
 
 <script>
@@ -288,6 +316,7 @@
     const ATTENDANCE_FORM_URL = "https://forms.gle/6pUtD5bcLRYJV18Z8";
     const DEPARTURE_FORM_URL = "https://forms.gle/Hn2ysDaE5TP6pwn17";
     // ========================================================
+
     const statusDiv = document.getElementById('status-message');
     const page1 = document.getElementById('page-1');
     const page2 = document.getElementById('page-2');
