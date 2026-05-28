@@ -7,17 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <style>
-/* ════ RESET & VARS ════ */
 :root{
-  --bg:#080F1E; --bg2:#0D1A2E; --bg3:#121E33;
+  --bg:#080F1E;--bg2:#0D1A2E;--bg3:#121E33;
   --card:rgba(13,26,46,0.92);
-  --gold:#C9A84C; --gold2:#E8C97A; --gold3:#6B4F0F;
-  --white:#F0F4FF; --muted:#6B82A0;
-  --ok:#3DD68C; --err:#FF6060; --warn:#FFB020; --info:#5BA4F5;
+  --gold:#C9A84C;--gold2:#E8C97A;--gold3:#6B4F0F;
+  --white:#F0F4FF;--muted:#6B82A0;
+  --ok:#3DD68C;--err:#FF6060;--warn:#FFB020;--info:#5BA4F5;
   --border:rgba(201,168,76,0.2);
   --sh:0 20px 60px rgba(0,0,0,0.6);
 }
@@ -25,12 +23,8 @@
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--white);direction:rtl;-webkit-font-smoothing:antialiased;}
 body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 10%,rgba(201,168,76,.06),transparent),radial-gradient(ellipse 60% 60% at 90% 90%,rgba(5,15,35,.8),transparent);pointer-events:none;z-index:0;}
-
-/* ════ PAGES ════ */
 .page{position:fixed;inset:0;overflow-y:auto;z-index:2;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .35s ease,transform .35s ease;}
 .page.active{opacity:1;transform:none;pointer-events:all;}
-
-/* ════ HEADER ════ */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.2rem;background:rgba(6,12,26,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
 .hdr-l{display:flex;align-items:center;gap:.6rem;}
 .logo-ph{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold3));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
@@ -38,14 +32,8 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .hdr h1{font-size:.95rem;font-weight:800;color:var(--gold);}
 .btn-sm{background:transparent;border:1px solid var(--border);color:var(--muted);padding:.32rem .75rem;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.78rem;transition:all .2s;}
 .btn-sm:hover{border-color:var(--gold);color:var(--gold);}
-
-/* ════ WRAP ════ */
 .wrap{max-width:860px;margin:0 auto;padding:1.2rem;}
-
-/* ════ CARD ════ */
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.4rem;backdrop-filter:blur(14px);box-shadow:var(--sh);margin-bottom:1rem;}
-
-/* ════ HOME ════ */
 .hero{text-align:center;padding:2.2rem 1rem 1.5rem;}
 .hero h2{font-size:1.75rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.35rem;}
 .hero p{color:var(--muted);font-size:.88rem;}
@@ -57,65 +45,48 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .hcard .ico{font-size:2.6rem;margin-bottom:.8rem;display:block;}
 .hcard h3{font-size:1rem;font-weight:800;margin-bottom:.28rem;}
 .hcard p{color:var(--muted);font-size:.78rem;}
-
-/* ════ FORM ════ */
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
 @media(max-width:520px){.fgrid{grid-template-columns:1fr;}}
 .fg{display:flex;flex-direction:column;gap:.32rem;}
 .fg.full{grid-column:1/-1;}
 .fg label{font-size:.76rem;color:var(--gold);font-weight:700;letter-spacing:.03em;}
-.fg input,.fg select,.fg textarea{
-  background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;
-  padding:.68rem .9rem;color:var(--white);font-family:'Cairo',sans-serif;font-size:.87rem;
-  transition:border-color .2s,box-shadow .2s,background .2s;width:100%;
-}
+.fg input,.fg select,.fg textarea{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:.68rem .9rem;color:var(--white);font-family:'Cairo',sans-serif;font-size:.87rem;transition:border-color .2s,box-shadow .2s,background .2s;width:100%;}
 .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--gold);background:rgba(201,168,76,.05);box-shadow:0 0 0 3px rgba(201,168,76,.11);}
 .fg input::placeholder{color:var(--muted);opacity:.65;}
 .fg select option{background:#0D1A2E;}
 .fg textarea{resize:vertical;min-height:76px;}
 .fg input[type="file"]{padding:.45rem;}
-
-/* ════ BUTTONS ════ */
 .btn{padding:.7rem 1.35rem;border-radius:10px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:700;transition:all .22s;display:inline-flex;align-items:center;gap:.38rem;justify-content:center;}
 .btn-p{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#07111F;box-shadow:0 4px 16px rgba(201,168,76,.32);}
 .btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(201,168,76,.48);}
 .btn-g{background:transparent;border:1px solid var(--border);color:var(--muted);}
 .btn-g:hover{border-color:var(--gold);color:var(--gold);}
 .btn-ok{background:linear-gradient(135deg,#3DD68C,#15803d);color:#fff;box-shadow:0 4px 14px rgba(61,214,140,.25);}
-.btn-ok:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(61,214,140,.38);}
+.btn-ok:hover{transform:translateY(-2px);}
 .btn-red{background:linear-gradient(135deg,#FF6060,#dc2626);color:#fff;}
 .btn-red:hover{transform:translateY(-2px);}
 .btn-fw{width:100%;}
-
-/* ════ SECTION TITLE ════ */
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none !important;}
 .st{font-size:1rem;font-weight:800;color:var(--gold);margin-bottom:1.1rem;display:flex;align-items:center;gap:.45rem;}
 .st::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* ════ LOGIN ════ */
 .lw{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;}
 .lbox{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:2.2rem 1.7rem;width:100%;max-width:380px;backdrop-filter:blur(16px);box-shadow:var(--sh);}
 .l-ico{font-size:2.6rem;text-align:center;margin-bottom:.7rem;}
 .l-t{text-align:center;font-size:1.3rem;font-weight:900;color:var(--gold);margin-bottom:.18rem;}
 .l-s{text-align:center;color:var(--muted);font-size:.8rem;margin-bottom:1.6rem;}
-
-/* ════ STATS ════ */
 .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.7rem;margin-bottom:1.4rem;}
 .sc{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:11px;padding:.8rem;text-align:center;}
 .sc .n{font-size:1.75rem;font-weight:900;color:var(--gold);}
 .sc .l{font-size:.7rem;color:var(--muted);}
-
-/* ════ TABS ════ */
 .tabs{display:flex;gap:.35rem;margin-bottom:1.2rem;background:rgba(255,255,255,.02);padding:4px;border-radius:11px;border:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tbtn{padding:.52rem .85rem;border-radius:8px;border:none;background:transparent;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;}
 .tbtn.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#07111F;}
 .tp{display:none;}
 .tp.on{display:block;}
-
-/* ════ REQUEST CARD ════ */
 .rlist{display:flex;flex-direction:column;gap:.8rem;}
 .rc{background:rgba(255,255,255,.022);border:1px solid var(--border);border-radius:13px;padding:1.05rem;transition:all .2s;}
-.rc:hover{border-color:rgba(201,168,76,.38);background:rgba(201,168,76,.025);}
+.rc:hover{border-color:rgba(201,168,76,.38);}
 .rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.65rem;gap:.45rem;flex-wrap:wrap;}
 .rc-name{font-size:.92rem;font-weight:800;}
 .bdg{padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:700;white-space:nowrap;}
@@ -127,47 +98,31 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .ri strong{color:var(--white);}
 .ra{display:flex;gap:.45rem;margin-top:.85rem;flex-wrap:wrap;}
 @media(max-width:430px){.ri{grid-template-columns:1fr;}.ra{flex-direction:column;}.ra .btn{width:100%;}}
-
-/* ════ PATH ════ */
 .path{display:flex;align-items:center;gap:.28rem;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;padding:.5rem .85rem;margin-bottom:.85rem;overflow-x:auto;font-size:.74rem;scrollbar-width:none;}
 .path::-webkit-scrollbar{display:none;}
 .ps{white-space:nowrap;display:flex;align-items:center;gap:.18rem;}
 .ps.done{color:var(--ok);}
 .ps.act{color:var(--gold);font-weight:700;}
 .psep{color:var(--border);flex-shrink:0;padding:0 .1rem;}
-
-/* ════ SIG ════ */
 .sig-b{border:2px dashed var(--border);border-radius:11px;overflow:hidden;background:#f8f8f5;cursor:crosshair;}
 .sig-b canvas{display:block;width:100%;touch-action:none;}
-
-/* ════ MODAL ════ */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);z-index:999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .28s;}
 .mo.on{opacity:1;pointer-events:all;}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:1.65rem;max-width:490px;width:100%;transform:scale(.9);transition:transform .3s cubic-bezier(.16,1,.3,1);max-height:90vh;overflow-y:auto;}
 .mo.on .modal{transform:scale(1);}
 .m-title{font-size:1rem;font-weight:800;color:var(--gold);margin-bottom:.95rem;}
-
-/* ════ SUPERVISOR ITEM ════ */
 .si{background:rgba(255,255,255,.022);border:1px solid var(--border);border-radius:12px;padding:.88rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:.7rem;margin-bottom:.6rem;}
 .si .sn{font-weight:700;font-size:.88rem;}
 .si .sm{font-size:.73rem;color:var(--muted);margin-top:.18rem;}
-
-/* ════ ALERTS ════ */
 .al{padding:.68rem 1rem;border-radius:9px;font-size:.82rem;margin-bottom:.7rem;}
 .al-e{background:rgba(255,96,96,.1);border:1px solid rgba(255,96,96,.3);color:#fca5a5;}
 .al-ok{background:rgba(61,214,140,.1);border:1px solid rgba(61,214,140,.3);color:var(--ok);}
-.al-i{background:rgba(201,168,76,.08);border:1px solid var(--border);color:var(--gold);}
-
-/* ════ EMPTY ════ */
 .empty{text-align:center;padding:2.4rem 1rem;color:var(--muted);}
 .empty .ei{font-size:2.4rem;margin-bottom:.7rem;}
-
-/* ════ LOADING ════ */
 .loading{display:flex;align-items:center;justify-content:center;padding:2rem;color:var(--muted);font-size:.88rem;gap:.5rem;}
-.spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;}
+.spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* ════ MISC ════ */
+#pdf-c{background:#fff;color:#111;padding:1.4rem;border-radius:10px;direction:rtl;font-family:Cairo,Arial,sans-serif;}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);border-radius:3px;}
@@ -176,30 +131,26 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .a2{animation:up .4s .1s ease both;}
 .a3{animation:up .4s .2s ease both;}
 @media(max-width:430px){.hero h2{font-size:1.4rem;}.lbox{padding:1.5rem 1.1rem;}.card{padding:1rem;}.wrap{padding:.9rem;}}
-
-/* ════ PDF CONTENT ════ */
-#pdf-c{background:#fff;color:#111;padding:1.4rem;border-radius:10px;direction:rtl;font-family:Cairo,Arial,sans-serif;}
-
-/* ════ SETUP BANNER ════ */
-.setup-banner{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.4);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.83rem;color:var(--gold2);line-height:1.7;}
-.setup-banner code{background:rgba(201,168,76,.15);padding:.1rem .45rem;border-radius:5px;font-size:.8rem;}
+/* online indicator */
+.online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;margin-left:5px;}
+.offline-dot{width:8px;height:8px;border-radius:50%;background:var(--err);display:inline-block;margin-left:5px;}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════ HOME ═══════════════ -->
+<!-- HOME -->
 <div id="p-home" class="page active">
   <div class="hdr">
     <div class="hdr-l">
       <div id="hl-h" class="logo-ph">🏢</div>
-      <h1 id="cn-h">نظام الأوفرتايم</h1>
+      <h1>نظام الأوفرتايم</h1>
     </div>
+    <div id="conn-badge" style="font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.3rem"></div>
   </div>
   <div class="hero a1">
     <h2>نظام إدارة طلبات الأوفرتايم</h2>
     <p>منصة متكاملة لتقديم ومتابعة طلبات العمل الإضافي</p>
   </div>
-  <div id="fb-warn"></div>
   <div class="hgrid">
     <div class="hcard a1" onclick="go('p-emp')">
       <span class="ico">📋</span>
@@ -219,7 +170,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- ═══════════════ EMPLOYEE ═══════════════ -->
+<!-- EMPLOYEE -->
 <div id="p-emp" class="page">
   <div class="hdr">
     <div class="hdr-l">
@@ -243,14 +194,12 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
         <div class="fg full"><label>سبب الأوفرتايم *</label><textarea id="e-reason" placeholder="اذكر سبب طلب العمل الإضافي..."></textarea></div>
       </div>
       <div id="e-err" class="al al-e" style="display:none;margin-top:.85rem"></div>
-      <button class="btn btn-p btn-fw" style="margin-top:1.3rem;font-size:1rem;padding:.82rem" onclick="submitEmp()">
-        📤 إرسال الطلب
-      </button>
+      <button id="e-btn" class="btn btn-p btn-fw" style="margin-top:1.3rem;font-size:1rem;padding:.82rem" onclick="submitEmp()">📤 إرسال الطلب</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ SUP LOGIN ═══════════════ -->
+<!-- SUP LOGIN -->
 <div id="p-sup-login" class="page">
   <div class="lw">
     <div class="lbox a1">
@@ -258,15 +207,15 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
       <div class="l-t">بوابة المشرف</div>
       <div class="l-s">تسجيل الدخول لمراجعة الطلبات</div>
       <div class="fg" style="margin-bottom:.8rem"><label>اسم المستخدم</label><input id="sl-u" placeholder="اسم المستخدم" autocomplete="username"></div>
-      <div class="fg" style="margin-bottom:1.2rem"><label>كلمة المرور</label><input id="sl-p" type="password" placeholder="••••••••" autocomplete="current-password" onkeypress="if(event.key==='Enter')loginSup()"></div>
+      <div class="fg" style="margin-bottom:1.2rem"><label>كلمة المرور</label><input id="sl-p" type="password" placeholder="••••••••" onkeypress="if(event.key==='Enter')loginSup()"></div>
       <div id="sl-err" class="al al-e" style="display:none"></div>
-      <button class="btn btn-p btn-fw" onclick="loginSup()">تسجيل الدخول</button>
+      <button id="sl-btn" class="btn btn-p btn-fw" onclick="loginSup()">تسجيل الدخول</button>
       <button class="btn btn-g btn-fw" style="margin-top:.55rem" onclick="go('p-home')">رجوع</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ SUP DASH ═══════════════ -->
+<!-- SUP DASH -->
 <div id="p-sup-dash" class="page">
   <div class="hdr">
     <div class="hdr-l">
@@ -283,7 +232,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- ═══════════════ ADM LOGIN ═══════════════ -->
+<!-- ADM LOGIN -->
 <div id="p-adm-login" class="page">
   <div class="lw">
     <div class="lbox a1">
@@ -291,15 +240,15 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
       <div class="l-t">بوابة الإدارة</div>
       <div class="l-s">الدخول الخاص بالإدارة العليا</div>
       <div class="fg" style="margin-bottom:.8rem"><label>اسم المستخدم</label><input id="al-u" placeholder="admin" autocomplete="username"></div>
-      <div class="fg" style="margin-bottom:1.2rem"><label>كلمة المرور</label><input id="al-p" type="password" placeholder="••••••••" autocomplete="current-password" onkeypress="if(event.key==='Enter')loginAdm()"></div>
+      <div class="fg" style="margin-bottom:1.2rem"><label>كلمة المرور</label><input id="al-p" type="password" placeholder="••••••••" onkeypress="if(event.key==='Enter')loginAdm()"></div>
       <div id="al-err" class="al al-e" style="display:none"></div>
-      <button class="btn btn-p btn-fw" onclick="loginAdm()">تسجيل الدخول</button>
+      <button id="al-btn" class="btn btn-p btn-fw" onclick="loginAdm()">تسجيل الدخول</button>
       <button class="btn btn-g btn-fw" style="margin-top:.55rem" onclick="go('p-home')">رجوع</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ ADM DASH ═══════════════ -->
+<!-- ADM DASH -->
 <div id="p-adm-dash" class="page">
   <div class="hdr">
     <div class="hdr-l">
@@ -314,15 +263,11 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
       <button class="tbtn" onclick="stab('t-sup',this)">👥 المشرفون</button>
       <button class="tbtn" onclick="stab('t-set',this)">⚙️ الإعدادات</button>
     </div>
-
-    <!-- Requests -->
     <div id="t-req" class="tp on">
       <div class="sg" id="ad-stats"></div>
       <div class="st">📋 جميع الطلبات</div>
       <div id="ad-list" class="rlist"></div>
     </div>
-
-    <!-- Supervisors -->
     <div id="t-sup" class="tp">
       <div class="st">➕ إضافة مشرف جديد</div>
       <div class="card">
@@ -335,13 +280,11 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
           <div class="fg"><label>رقم الجوال *</label><input id="ns-mob" type="tel" placeholder="05XXXXXXXX" maxlength="10" inputmode="numeric"></div>
         </div>
         <div id="ns-err" class="al al-e" style="display:none;margin-top:.85rem"></div>
-        <button class="btn btn-p" style="margin-top:1rem" onclick="createSup()">✅ إنشاء الحساب</button>
+        <button id="ns-btn" class="btn btn-p" style="margin-top:1rem" onclick="createSup()">✅ إنشاء الحساب</button>
       </div>
       <div class="st" style="margin-top:1rem">قائمة المشرفين</div>
       <div id="sups-list"></div>
     </div>
-
-    <!-- Settings -->
     <div id="t-set" class="tp">
       <div class="st">🏢 شعار الشركة</div>
       <div class="card">
@@ -362,9 +305,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- ═══════════════ MODALS ═══════════════ -->
-
-<!-- Success -->
+<!-- MODAL: Success -->
 <div id="m-ok" class="mo">
   <div class="modal" style="text-align:center">
     <div style="font-size:3.2rem;margin-bottom:.7rem">✅</div>
@@ -375,7 +316,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- Sup Sign -->
+<!-- MODAL: Sup Sign -->
 <div id="m-ss" class="mo">
   <div class="modal">
     <div class="m-title">✍️ تأكيد وتوقيع المشرف</div>
@@ -393,7 +334,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- Adm Sign -->
+<!-- MODAL: Adm Sign -->
 <div id="m-as" class="mo">
   <div class="modal">
     <div class="m-title">🏛️ توقيع واعتماد الإدارة</div>
@@ -418,7 +359,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- PDF -->
+<!-- MODAL: PDF -->
 <div id="m-pdf" class="mo">
   <div class="modal" style="max-width:660px;width:96vw">
     <div class="m-title">📄 معاينة الطلب</div>
@@ -430,11 +371,11 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- Delete -->
+<!-- MODAL: Delete -->
 <div id="m-del" class="mo">
   <div class="modal">
     <div class="m-title">⚠️ تأكيد الحذف</div>
-    <p style="color:var(--muted);margin-bottom:1.2rem">هل أنت متأكد من حذف هذا المشرف؟ لا يمكن التراجع.</p>
+    <p style="color:var(--muted);margin-bottom:1.2rem">هل أنت متأكد من حذف هذا المشرف؟</p>
     <div style="display:flex;gap:.45rem">
       <button class="btn btn-red" style="flex:1" id="del-btn">نعم، احذف</button>
       <button class="btn btn-g" onclick="closeM('m-del')">إلغاء</button>
@@ -443,172 +384,173 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 </div>
 
 <script>
-/* ══════════════════════════════════════════════════════
-   ⚙️  FIREBASE CONFIG — ضع إعدادات Firebase هنا
-   1. اذهب إلى https://console.firebase.google.com
-   2. أنشئ مشروعاً جديداً
-   3. Firestore Database → إنشاء قاعدة بيانات
-   4. انسخ إعدادات المشروع وضعها هنا
-══════════════════════════════════════════════════════ */
-const FB_CONFIG = {
+/* ════════════════════════════════════════
+   ضع إعدادات Firebase هنا
+   اذهب لـ: Project Settings > Your Apps > </> > Firebase SDK snippet
+════════════════════════════════════════ */
+const FB_CONFIG =  {
   apiKey: "AIzaSyAS1z8yaaNgddIEe_ifZuONbJ7hjp21Hqc",
   authDomain: "overtimeswa.firebaseapp.com",
+  databaseURL: "https://overtimeswa-default-rtdb.firebaseio.com",
   projectId: "overtimeswa",
   storageBucket: "overtimeswa.firebasestorage.app",
   messagingSenderId: "828557764037",
   appId: "1:828557764037:web:a213d5097f949379a2d7ac"
 };
-/* ══════════════════════════════════════════════════════ */
 
-// ─── ADMIN CREDENTIALS (غيّرها بعد أول تشغيل) ───
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "admin@2024";
+// بيانات الإدارة الافتراضية
+const ADMIN_U = "admin";
+const ADMIN_P = "admin@2024";
 
-// ─── STATE ───
-let CU=null, CRid=null, db=null, fbReady=false;
+/* ════ STATE ════ */
+let CU=null, CRid=null, db=null, fbOK=false;
 let admSigMode='draw', admUpSig=null;
 
-// ─── INIT FIREBASE ───
+/* ════ FIREBASE INIT ════ */
 function initFB(){
+  // تحقق إذا الإعدادات تم تغييرها
+  if(FB_CONFIG.apiKey === "YOUR_API_KEY"){
+    console.log("⚠️ Firebase not configured — using localStorage");
+    setConn(false);
+    return;
+  }
   try{
-    if(FB_CONFIG.apiKey==="YOUR_API_KEY"){
-      showSetupBanner();
-      useLocalMode();
-      return;
-    }
     firebase.initializeApp(FB_CONFIG);
     db = firebase.firestore();
-    fbReady = true;
-    initAdminDoc();
-  } catch(e){
-    console.error("Firebase error:",e);
-    useLocalMode();
+    // تفعيل الكاش المحلي لدعم الوضع بدون انترنت
+    db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+    fbOK = true;
+    setConn(true);
+    console.log("✅ Firebase connected");
+  }catch(e){
+    console.error("Firebase init failed:", e);
+    setConn(false);
   }
 }
 
-function showSetupBanner(){
-  const w = document.getElementById('fb-warn');
-  w.style.cssText='max-width:860px;margin:0 auto;padding:0 1.2rem;';
-  w.innerHTML=`
-    <div class="setup-banner">
-      <strong>🔧 يعمل الآن بالوضع المحلي (للمعاينة فقط)</strong><br>
-      لتفعيل المزامنة بين الأجهزة، افتح الملف في محرر نصوص وضع إعدادات Firebase في المتغير <code>FB_CONFIG</code> في أول الكود.<br>
-      <a href="https://console.firebase.google.com" target="_blank" style="color:var(--gold2)">انقر هنا لإنشاء مشروع Firebase مجاني ←</a>
-    </div>`;
+function setConn(ok){
+  const el = document.getElementById('conn-badge');
+  if(!el) return;
+  el.innerHTML = ok
+    ? `<span class="online-dot"></span> متصل بالسحابة`
+    : `<span class="offline-dot"></span> وضع محلي`;
 }
 
-// وضع محلي (localStorage) كاحتياط
-function useLocalMode(){
-  fbReady = false;
-}
+/* ════ STORAGE — Firebase أو localStorage ════ */
 
-async function initAdminDoc(){
-  if(!fbReady) return;
-  try{
-    const ref = db.collection('settings').doc('admin');
-    const doc = await ref.get();
-    if(!doc.exists){
-      await ref.set({username:ADMIN_USER, password:ADMIN_PASS, logo:null, companyName:'الشركة'});
-    }
-  } catch(e){ console.warn("initAdmin:",e); }
-}
-
-// ─── STORAGE (Firebase or local) ───
+// ── SETTINGS ──
 async function getSettings(){
-  if(fbReady){
+  if(fbOK){
     try{
-      const d = await db.collection('settings').doc('admin').get();
-      return d.exists ? d.data() : {username:ADMIN_USER,password:ADMIN_PASS,logo:null};
-    }catch(e){ return getLocal('cfg',{username:ADMIN_USER,password:ADMIN_PASS,logo:null}); }
+      const d = await withTimeout(db.collection('settings').doc('main').get(), 5000);
+      if(d.exists) return d.data();
+    }catch(e){ console.warn("getSettings:", e.message); }
   }
-  return getLocal('cfg',{username:ADMIN_USER,password:ADMIN_PASS,logo:null});
+  return getLoc('cfg', {username:ADMIN_U, password:ADMIN_P, logo:null});
 }
 
 async function saveSettings(data){
-  if(fbReady){
-    try{ await db.collection('settings').doc('admin').set(data,{merge:true}); return; }
-    catch(e){}
+  if(fbOK){
+    try{
+      await withTimeout(db.collection('settings').doc('main').set(data, {merge:true}), 5000);
+      return;
+    }catch(e){ console.warn("saveSettings:", e.message); }
   }
-  const cur = getLocal('cfg',{});
-  setLocal('cfg',{...cur,...data});
+  setLoc('cfg', {...getLoc('cfg',{}), ...data});
 }
 
+// ── USERS / SUPERVISORS ──
 async function getUsers(){
-  if(fbReady){
+  if(fbOK){
     try{
-      const snap = await db.collection('supervisors').get();
-      return snap.docs.map(d=>({id:d.id,...d.data()}));
-    }catch(e){ return getLocal('users',[]); }
+      const s = await withTimeout(db.collection('supervisors').get(), 5000);
+      return s.docs.map(d=>({id:d.id, ...d.data()}));
+    }catch(e){ console.warn("getUsers:", e.message); }
   }
-  return getLocal('users',[]);
+  return getLoc('users', []);
 }
 
 async function addUser(data){
-  if(fbReady){
-    try{ const ref = await db.collection('supervisors').add(data); return ref.id; }
-    catch(e){}
+  if(fbOK){
+    try{
+      const ref = await withTimeout(db.collection('supervisors').add(data), 5000);
+      return ref.id;
+    }catch(e){ console.warn("addUser:", e.message); }
   }
-  const users = getLocal('users',[]);
+  const users = getLoc('users', []);
   const id = 'SUP'+Date.now();
-  users.push({id,...data});
-  setLocal('users',users);
+  users.push({id, ...data});
+  setLoc('users', users);
   return id;
 }
 
 async function delUser(id){
-  if(fbReady){
-    try{ await db.collection('supervisors').doc(id).delete(); return; }catch(e){}
+  if(fbOK){
+    try{
+      await withTimeout(db.collection('supervisors').doc(id).delete(), 5000);
+      return;
+    }catch(e){ console.warn("delUser:", e.message); }
   }
-  setLocal('users', getLocal('users',[]).filter(u=>u.id!==id));
+  setLoc('users', getLoc('users',[]).filter(u=>u.id!==id));
 }
 
+// ── REQUESTS ──
 async function getReqs(){
-  if(fbReady){
+  if(fbOK){
     try{
-      const snap = await db.collection('requests').orderBy('createdAt','desc').get();
-      return snap.docs.map(d=>({id:d.id,...d.data()}));
-    }catch(e){ return getLocal('reqs',[]); }
+      const s = await withTimeout(db.collection('requests').orderBy('ts','desc').get(), 6000);
+      return s.docs.map(d=>({id:d.id, ...d.data()}));
+    }catch(e){ console.warn("getReqs:", e.message); }
   }
-  return getLocal('reqs',[]).reverse();
+  return [...getLoc('reqs',[])].reverse();
 }
 
 async function addReq(data){
-  if(fbReady){
+  if(fbOK){
     try{
-      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-      const ref = await db.collection('requests').add(data);
+      data.ts = firebase.firestore.FieldValue.serverTimestamp();
+      const ref = await withTimeout(db.collection('requests').add(data), 6000);
       return ref.id;
-    }catch(e){}
+    }catch(e){ console.warn("addReq Firebase failed, using local:", e.message); }
   }
-  const reqs = getLocal('reqs',[]);
-  const id='REQ'+Date.now();
-  reqs.push({id,...data,createdAt:new Date().toISOString()});
-  setLocal('reqs',reqs);
+  const reqs = getLoc('reqs', []);
+  const id = 'REQ'+Date.now();
+  data.ts = Date.now();
+  reqs.push({id, ...data});
+  setLoc('reqs', reqs);
   return id;
 }
 
 async function updateReq(id, data){
-  if(fbReady){
-    try{ await db.collection('requests').doc(id).update(data); return; }catch(e){}
+  if(fbOK){
+    try{
+      await withTimeout(db.collection('requests').doc(id).update(data), 5000);
+      return;
+    }catch(e){ console.warn("updateReq Firebase failed, using local:", e.message); }
   }
-  const reqs = getLocal('reqs',[]);
+  const reqs = getLoc('reqs', []);
   const i = reqs.findIndex(r=>r.id===id);
-  if(i!==-1){ Object.assign(reqs[i],data); setLocal('reqs',reqs); }
+  if(i!==-1){ Object.assign(reqs[i], data); setLoc('reqs', reqs); }
 }
 
-function getLocal(k,def){ try{ return JSON.parse(localStorage.getItem(k)||'null')||def; }catch{ return def; } }
-function setLocal(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+// ── UTILS ──
+function withTimeout(promise, ms){
+  const t = new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms));
+  return Promise.race([promise, t]);
+}
+function getLoc(k, def){ try{ return JSON.parse(localStorage.getItem(k)||'null')||def; }catch{ return def; } }
+function setLoc(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
 
-// ─── NAV ───
+/* ════ NAV ════ */
 function go(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const pg=document.getElementById(id);
-  if(pg){pg.classList.add('active');pg.scrollTop=0;}
+  const pg = document.getElementById(id);
+  if(pg){ pg.classList.add('active'); pg.scrollTop=0; }
   if(id==='p-sup-dash') renderSupDash();
   if(id==='p-adm-dash') renderAdmDash();
 }
 
-function stab(tid,btn){
+function stab(tid, btn){
   document.querySelectorAll('.tp').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
   document.getElementById(tid).classList.add('on');
@@ -618,46 +560,45 @@ function stab(tid,btn){
 }
 
 function logout(){
-  CU=null;
-  ['sl-u','sl-p','al-u','al-p'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  CU = null;
+  ['sl-u','sl-p','al-u','al-p'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
   go('p-home');
 }
 
-// ─── AUTH ───
+/* ════ AUTH ════ */
 async function loginSup(){
-  const u=gv('sl-u'),p=gv('sl-p'),el=document.getElementById('sl-err');
+  const u=gv('sl-u'), p=gv('sl-p'), el=document.getElementById('sl-err');
   if(!u||!p) return se(el,'يرجى إدخال اسم المستخدم وكلمة المرور');
-  const btn = event.target;
-  btn.textContent='جار التحقق...'; btn.disabled=true;
+  setBtn('sl-btn','جار التحقق...',true);
   try{
     const users = await getUsers();
-    const user = users.find(x=>x.username===u&&x.password===p);
-    if(!user){ se(el,'اسم المستخدم أو كلمة المرور غير صحيحة'); btn.textContent='تسجيل الدخول'; btn.disabled=false; return; }
-    he(el); CU=user; go('p-sup-dash');
+    const user = users.find(x=>x.username===u && x.password===p);
+    if(!user){ se(el,'اسم المستخدم أو كلمة المرور غير صحيحة'); }
+    else{ he(el); CU=user; go('p-sup-dash'); }
   }catch(e){ se(el,'حدث خطأ، حاول مرة أخرى'); }
-  btn.textContent='تسجيل الدخول'; btn.disabled=false;
+  setBtn('sl-btn','تسجيل الدخول',false);
 }
 
 async function loginAdm(){
-  const u=gv('al-u'),p=gv('al-p'),el=document.getElementById('al-err');
+  const u=gv('al-u'), p=gv('al-p'), el=document.getElementById('al-err');
   if(!u||!p) return se(el,'يرجى إدخال اسم المستخدم وكلمة المرور');
-  const btn = event.target;
-  btn.textContent='جار التحقق...'; btn.disabled=true;
+  setBtn('al-btn','جار التحقق...',true);
   try{
     const cfg = await getSettings();
-    const au = cfg.username||ADMIN_USER;
-    const ap = cfg.password||ADMIN_PASS;
-    if(u!==au||p!==ap){ se(el,'اسم المستخدم أو كلمة المرور غير صحيحة'); btn.textContent='تسجيل الدخول'; btn.disabled=false; return; }
-    he(el); CU={role:'admin',name:'الإدارة'}; go('p-adm-dash');
+    const au = cfg.username||ADMIN_U;
+    const ap = cfg.password||ADMIN_P;
+    if(u!==au || p!==ap){ se(el,'اسم المستخدم أو كلمة المرور غير صحيحة'); }
+    else{ he(el); CU={role:'admin',name:'الإدارة'}; go('p-adm-dash'); }
   }catch(e){ se(el,'حدث خطأ، حاول مرة أخرى'); }
-  btn.textContent='تسجيل الدخول'; btn.disabled=false;
+  setBtn('al-btn','تسجيل الدخول',false);
 }
 
-// ─── EMPLOYEE ───
+/* ════ EMPLOYEE ════ */
 async function submitEmp(){
-  const nm=gv('e-name'),nid=gv('e-nid'),mob=gv('e-mob'),dept=gv('e-dept');
-  const mgr=gv('e-mgr'),dt=gv('e-date'),st=gv('e-st'),et=gv('e-et'),rs=gv('e-reason');
-  const el=document.getElementById('e-err');
+  const nm=gv('e-name'), nid=gv('e-nid'), mob=gv('e-mob'), dept=gv('e-dept');
+  const mgr=gv('e-mgr'), dt=gv('e-date'), st=gv('e-st'), et=gv('e-et'), rs=gv('e-reason');
+  const el = document.getElementById('e-err');
+
   if(!nm||!nid||!mob||!dept||!dt||!st||!et||!rs)
     return se(el,'⚠️ يرجى ملء جميع الحقول المطلوبة (*)');
   if(!/^[12]\d{9}$/.test(nid))
@@ -666,182 +607,201 @@ async function submitEmp(){
     return se(el,'⚠️ رقم الجوال غير صحيح — يبدأ بـ 05 ويكون 10 أرقام');
   he(el);
 
-  const[sh,sm]=st.split(':').map(Number),[eh,em]=et.split(':').map(Number);
+  const[sh,sm]=st.split(':').map(Number), [eh,em]=et.split(':').map(Number);
   let mins=(eh*60+em)-(sh*60+sm);
-  if(mins<=0)mins+=1440;
+  if(mins<=0) mins+=1440;
   const hrs=(mins/60).toFixed(1);
 
-  const btn=document.querySelector('#p-emp .btn-p');
-  btn.textContent='جار الإرسال...'; btn.disabled=true;
-
+  setBtn('e-btn','جار الإرسال...',true);
   try{
-    await addReq({name:nm,nid,mob,dept,mgr:mgr||'—',date:dt,st,et,hrs,reason:rs,status:'pending',supSig:null,supAt:null,admSig:null,admAt:null});
-    ['e-name','e-nid','e-mob','e-dept','e-mgr','e-st','e-et','e-reason'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
-    document.getElementById('e-date').valueAsDate=new Date();
+    await addReq({
+      name:nm, nid, mob, dept, mgr:mgr||'—',
+      date:dt, st, et, hrs, reason:rs,
+      status:'pending',
+      supSig:null, supAt:null, admSig:null, admAt:null,
+      createdAt: new Date().toLocaleString('ar-SA')
+    });
+    ['e-name','e-nid','e-mob','e-dept','e-mgr','e-st','e-et','e-reason']
+      .forEach(i=>{ const e=document.getElementById(i); if(e) e.value=''; });
+    document.getElementById('e-date').valueAsDate = new Date();
     openM('m-ok');
-  }catch(e){ se(el,'⚠️ فشل الإرسال، تحقق من الاتصال'); }
-  btn.textContent='📤 إرسال الطلب'; btn.disabled=false;
+  }catch(e){
+    se(el,'⚠️ فشل الإرسال، حاول مرة أخرى');
+  }
+  setBtn('e-btn','📤 إرسال الطلب',false);
 }
 
 function newReq(){ closeM('m-ok'); }
 
-// ─── SUP DASH ───
+/* ════ SUPERVISOR DASH ════ */
 async function renderSupDash(){
-  if(!CU)return;
-  document.getElementById('sd-name').textContent=CU.name;
-  document.getElementById('sd-list').innerHTML=loading();
-  document.getElementById('sd-stats').innerHTML='';
-  const reqs = await getReqs();
-  const pend=reqs.filter(r=>r.status==='pending').length;
-  const appr=reqs.filter(r=>r.status==='supervisor_approved'||r.status==='admin_approved').length;
-  const rej=reqs.filter(r=>r.status==='rejected').length;
-  document.getElementById('sd-stats').innerHTML=`
-    <div class="sc"><div class="n">${reqs.length}</div><div class="l">الإجمالي</div></div>
-    <div class="sc"><div class="n" style="color:var(--warn)">${pend}</div><div class="l">معلقة</div></div>
-    <div class="sc"><div class="n" style="color:var(--ok)">${appr}</div><div class="l">موافق عليها</div></div>
-    <div class="sc"><div class="n" style="color:var(--err)">${rej}</div><div class="l">مرفوضة</div></div>
-  `;
-  const el=document.getElementById('sd-list');
-  if(!reqs.length){el.innerHTML=empty('📭','لا توجد طلبات بعد');return;}
-  el.innerHTML=reqs.map(r=>`
-    <div class="rc">
-      <div class="rc-top"><span class="rc-name">${r.name}</span>${bdg(r.status)}</div>
-      <div class="ri">
-        <span>📅 <strong>${r.date}</strong></span>
-        <span>⏱️ <strong>${r.st}–${r.et} (${r.hrs} س)</strong></span>
-        <span>🏢 <strong>${r.dept}</strong></span>
-        <span>📱 <strong>${r.mob}</strong></span>
-        ${r.mgr&&r.mgr!=='—'?`<span>👤 <strong>${r.mgr}</strong></span>`:''}
-        <span style="grid-column:1/-1">📝 ${r.reason}</span>
-      </div>
-      ${r.status==='pending'?`
-      <div class="ra">
-        <button class="btn btn-ok" style="flex:1;font-size:.82rem" onclick="openSupSign('${r.id}')">✅ موافقة وتوقيع</button>
-        <button class="btn btn-red" style="font-size:.82rem" onclick="qrej('${r.id}','sup')">❌ رفض</button>
-      </div>`:''}
-    </div>`).join('');
+  if(!CU) return;
+  document.getElementById('sd-name').textContent = CU.name;
+  document.getElementById('sd-list').innerHTML = loading();
+  document.getElementById('sd-stats').innerHTML = '';
+  try{
+    const reqs = await getReqs();
+    const pend = reqs.filter(r=>r.status==='pending').length;
+    const appr = reqs.filter(r=>r.status==='supervisor_approved'||r.status==='admin_approved').length;
+    const rej  = reqs.filter(r=>r.status==='rejected').length;
+    document.getElementById('sd-stats').innerHTML=`
+      <div class="sc"><div class="n">${reqs.length}</div><div class="l">الإجمالي</div></div>
+      <div class="sc"><div class="n" style="color:var(--warn)">${pend}</div><div class="l">معلقة</div></div>
+      <div class="sc"><div class="n" style="color:var(--ok)">${appr}</div><div class="l">موافق عليها</div></div>
+      <div class="sc"><div class="n" style="color:var(--err)">${rej}</div><div class="l">مرفوضة</div></div>`;
+    const el = document.getElementById('sd-list');
+    if(!reqs.length){ el.innerHTML=empty('📭','لا توجد طلبات بعد'); return; }
+    el.innerHTML = reqs.map(r=>`
+      <div class="rc">
+        <div class="rc-top"><span class="rc-name">${r.name}</span>${bdg(r.status)}</div>
+        <div class="ri">
+          <span>📅 <strong>${r.date}</strong></span>
+          <span>⏱️ <strong>${r.st}–${r.et} (${r.hrs} س)</strong></span>
+          <span>🏢 <strong>${r.dept}</strong></span>
+          <span>📱 <strong>${r.mob}</strong></span>
+          ${r.mgr&&r.mgr!=='—'?`<span>👤 <strong>${r.mgr}</strong></span>`:''}
+          <span style="grid-column:1/-1">📝 ${r.reason}</span>
+        </div>
+        ${r.status==='pending'?`
+        <div class="ra">
+          <button class="btn btn-ok" style="flex:1;font-size:.82rem" onclick="openSupSign('${r.id}')">✅ موافقة وتوقيع</button>
+          <button class="btn btn-red" style="font-size:.82rem" onclick="qrej('${r.id}','sup')">❌ رفض</button>
+        </div>`:''}
+      </div>`).join('');
+  }catch(e){
+    document.getElementById('sd-list').innerHTML = empty('⚠️','تعذر تحميل الطلبات');
+  }
 }
 
 function openSupSign(rid){
-  CRid=rid;
+  CRid = rid;
   getReqs().then(reqs=>{
-    const r=reqs.find(x=>x.id===rid);if(!r)return;
-    document.getElementById('ss-info').innerHTML=rInfo(r);
+    const r = reqs.find(x=>x.id===rid); if(!r) return;
+    document.getElementById('ss-info').innerHTML = rInfo(r);
     openM('m-ss');
-    setTimeout(()=>initCv('ss-cv'),80);
+    setTimeout(()=>initCv('ss-cv'), 80);
   });
 }
 
 async function supApprove(){
-  const cv=document.getElementById('ss-cv');
-  if(cvEmpty(cv)){toast('⚠️ يرجى رسم التوقيع أولاً');return;}
+  const cv = document.getElementById('ss-cv');
+  if(cvEmpty(cv)){ toast('⚠️ يرجى رسم التوقيع أولاً'); return; }
   await updateReq(CRid,{status:'supervisor_approved',supSig:cv.toDataURL(),supAt:tsNow()});
-  closeM('m-ss');renderSupDash();toast('✅ تمت الموافقة بنجاح');
+  closeM('m-ss'); renderSupDash(); toast('✅ تمت الموافقة بنجاح');
 }
 
 async function supReject(){
   await updateReq(CRid,{status:'rejected'});
-  closeM('m-ss');renderSupDash();toast('تم رفض الطلب');
+  closeM('m-ss'); renderSupDash(); toast('تم رفض الطلب');
 }
 
-async function qrej(rid,who){
-  if(!confirm('هل تريد رفض هذا الطلب؟'))return;
+async function qrej(rid, who){
+  if(!confirm('هل تريد رفض هذا الطلب؟')) return;
   await updateReq(rid,{status:'rejected'});
-  if(who==='sup')renderSupDash();else renderAdmDash();
+  if(who==='sup') renderSupDash(); else renderAdmDash();
 }
 
-// ─── ADM DASH ───
+/* ════ ADMIN DASH ════ */
 async function renderAdmDash(){
-  if(!CU)return;
-  document.getElementById('ad-list').innerHTML=loading();
-  document.getElementById('ad-stats').innerHTML='';
-  const reqs = await getReqs();
-  const pend=reqs.filter(r=>r.status==='pending').length;
-  const sap=reqs.filter(r=>r.status==='supervisor_approved').length;
-  const appr=reqs.filter(r=>r.status==='admin_approved').length;
-  const rej=reqs.filter(r=>r.status==='rejected').length;
-  document.getElementById('ad-stats').innerHTML=`
-    <div class="sc"><div class="n">${reqs.length}</div><div class="l">الإجمالي</div></div>
-    <div class="sc"><div class="n" style="color:var(--warn)">${pend}</div><div class="l">بانتظار المشرف</div></div>
-    <div class="sc"><div class="n" style="color:var(--info)">${sap}</div><div class="l">بانتظار الإدارة</div></div>
-    <div class="sc"><div class="n" style="color:var(--ok)">${appr}</div><div class="l">معتمدة</div></div>
-    <div class="sc"><div class="n" style="color:var(--err)">${rej}</div><div class="l">مرفوضة</div></div>
-  `;
-  const el=document.getElementById('ad-list');
-  if(!reqs.length){el.innerHTML=empty('📭','لا توجد طلبات بعد');return;}
-  el.innerHTML=reqs.map(r=>`
-    <div class="rc">
-      <div class="rc-top"><span class="rc-name">${r.name}</span>${bdg(r.status)}</div>
-      ${pathBar(r.status)}
-      <div class="ri">
-        <span>📅 <strong>${r.date}</strong></span>
-        <span>⏱️ <strong>${r.st}–${r.et} (${r.hrs} س)</strong></span>
-        <span>🏢 <strong>${r.dept}</strong></span>
-        <span>🪪 <strong>${r.nid}</strong></span>
-        <span>📱 <strong>${r.mob}</strong></span>
-        ${r.mgr&&r.mgr!=='—'?`<span>👤 <strong>${r.mgr}</strong></span>`:''}
-        <span style="grid-column:1/-1">📝 ${r.reason}</span>
-      </div>
-      <div class="ra">
-        ${r.status==='supervisor_approved'?`<button class="btn btn-p" style="flex:1;font-size:.82rem" onclick="openAdmSign('${r.id}')">🏛️ توقيع الإدارة</button>`:''}
-        ${r.status==='admin_approved'?`<button class="btn btn-ok" style="flex:1;font-size:.82rem" onclick="openPDF('${r.id}')">📄 تصدير PDF</button>`:''}
-        ${r.status!=='rejected'&&r.status!=='admin_approved'?`<button class="btn btn-red" style="font-size:.82rem" onclick="qrej('${r.id}','adm')">❌ رفض</button>`:''}
-      </div>
-    </div>`).join('');
+  if(!CU) return;
+  document.getElementById('ad-list').innerHTML = loading();
+  document.getElementById('ad-stats').innerHTML = '';
+  try{
+    const reqs = await getReqs();
+    const pend = reqs.filter(r=>r.status==='pending').length;
+    const sap  = reqs.filter(r=>r.status==='supervisor_approved').length;
+    const appr = reqs.filter(r=>r.status==='admin_approved').length;
+    const rej  = reqs.filter(r=>r.status==='rejected').length;
+    document.getElementById('ad-stats').innerHTML=`
+      <div class="sc"><div class="n">${reqs.length}</div><div class="l">الإجمالي</div></div>
+      <div class="sc"><div class="n" style="color:var(--warn)">${pend}</div><div class="l">بانتظار المشرف</div></div>
+      <div class="sc"><div class="n" style="color:var(--info)">${sap}</div><div class="l">بانتظار الإدارة</div></div>
+      <div class="sc"><div class="n" style="color:var(--ok)">${appr}</div><div class="l">معتمدة</div></div>
+      <div class="sc"><div class="n" style="color:var(--err)">${rej}</div><div class="l">مرفوضة</div></div>`;
+    const el = document.getElementById('ad-list');
+    if(!reqs.length){ el.innerHTML=empty('📭','لا توجد طلبات بعد'); return; }
+    el.innerHTML = reqs.map(r=>`
+      <div class="rc">
+        <div class="rc-top"><span class="rc-name">${r.name}</span>${bdg(r.status)}</div>
+        ${pathBar(r.status)}
+        <div class="ri">
+          <span>📅 <strong>${r.date}</strong></span>
+          <span>⏱️ <strong>${r.st}–${r.et} (${r.hrs} س)</strong></span>
+          <span>🏢 <strong>${r.dept}</strong></span>
+          <span>🪪 <strong>${r.nid}</strong></span>
+          <span>📱 <strong>${r.mob}</strong></span>
+          ${r.mgr&&r.mgr!=='—'?`<span>👤 <strong>${r.mgr}</strong></span>`:''}
+          <span style="grid-column:1/-1">📝 ${r.reason}</span>
+        </div>
+        <div class="ra">
+          ${r.status==='supervisor_approved'?`<button class="btn btn-p" style="flex:1;font-size:.82rem" onclick="openAdmSign('${r.id}')">🏛️ توقيع الإدارة</button>`:''}
+          ${r.status==='admin_approved'?`<button class="btn btn-ok" style="flex:1;font-size:.82rem" onclick="openPDF('${r.id}')">📄 تصدير PDF</button>`:''}
+          ${r.status!=='rejected'&&r.status!=='admin_approved'?`<button class="btn btn-red" style="font-size:.82rem" onclick="qrej('${r.id}','adm')">❌ رفض</button>`:''}
+        </div>
+      </div>`).join('');
+  }catch(e){
+    document.getElementById('ad-list').innerHTML = empty('⚠️','تعذر تحميل الطلبات');
+  }
 }
 
 function openAdmSign(rid){
   CRid=rid; admUpSig=null;
   getReqs().then(reqs=>{
-    const r=reqs.find(x=>x.id===rid);if(!r)return;
-    document.getElementById('as-info').innerHTML=rInfo(r);
-    sigMode('draw');openM('m-as');
-    setTimeout(()=>initCv('as-cv'),80);
+    const r=reqs.find(x=>x.id===rid); if(!r) return;
+    document.getElementById('as-info').innerHTML = rInfo(r);
+    sigMode('draw'); openM('m-as');
+    setTimeout(()=>initCv('as-cv'), 80);
   });
 }
 
 function sigMode(m){
-  admSigMode=m;
-  document.getElementById('as-draw').style.display=m==='draw'?'block':'none';
-  document.getElementById('as-up').style.display=m==='up'?'block':'none';
-  document.getElementById('sb-d').className='btn '+(m==='draw'?'btn-p':'btn-g');
-  document.getElementById('sb-u').className='btn '+(m==='up'?'btn-p':'btn-g');
-  ['sb-d','sb-u'].forEach(id=>{const e=document.getElementById(id);e.style.fontSize='.78rem';e.style.padding='.38rem .8rem';});
+  admSigMode = m;
+  document.getElementById('as-draw').style.display = m==='draw'?'block':'none';
+  document.getElementById('as-up').style.display   = m==='up'?'block':'none';
+  document.getElementById('sb-d').className = 'btn '+(m==='draw'?'btn-p':'btn-g');
+  document.getElementById('sb-u').className = 'btn '+(m==='up'?'btn-p':'btn-g');
+  ['sb-d','sb-u'].forEach(id=>{
+    const e=document.getElementById(id);
+    e.style.fontSize='.78rem'; e.style.padding='.38rem .8rem';
+  });
 }
 
 function prevSig(inp){
-  if(!inp.files[0])return;
-  const fr=new FileReader();
-  fr.onload=e=>{admUpSig=e.target.result;document.getElementById('as-prev').innerHTML=`<img src="${e.target.result}" style="max-width:100%;max-height:75px;border-radius:8px;background:#fff;padding:4px">`;};
+  if(!inp.files[0]) return;
+  const fr = new FileReader();
+  fr.onload = e=>{ admUpSig=e.target.result; document.getElementById('as-prev').innerHTML=`<img src="${e.target.result}" style="max-width:100%;max-height:75px;border-radius:8px;background:#fff;padding:4px">`; };
   fr.readAsDataURL(inp.files[0]);
 }
 
 async function admApprove(){
-  let sig=null;
+  let sig = null;
   if(admSigMode==='draw'){
-    const cv=document.getElementById('as-cv');
-    if(cvEmpty(cv)){toast('⚠️ يرجى رسم التوقيع أولاً');return;}
-    sig=cv.toDataURL();
+    const cv = document.getElementById('as-cv');
+    if(cvEmpty(cv)){ toast('⚠️ يرجى رسم التوقيع أولاً'); return; }
+    sig = cv.toDataURL();
   } else {
-    if(!admUpSig){toast('⚠️ يرجى رفع صورة التوقيع');return;}
-    sig=admUpSig;
+    if(!admUpSig){ toast('⚠️ يرجى رفع صورة التوقيع'); return; }
+    sig = admUpSig;
   }
   await updateReq(CRid,{status:'admin_approved',admSig:sig,admAt:tsNow()});
-  closeM('m-as');renderAdmDash();toast('✅ تم اعتماد الطلب بنجاح');
+  closeM('m-as'); renderAdmDash(); toast('✅ تم اعتماد الطلب بنجاح');
 }
 
 async function admReject(){
   await updateReq(CRid,{status:'rejected'});
-  closeM('m-as');renderAdmDash();toast('تم رفض الطلب');
+  closeM('m-as'); renderAdmDash(); toast('تم رفض الطلب');
 }
 
-// ─── PDF ───
+/* ════ PDF ════ */
 async function openPDF(rid){
-  CRid=rid;
+  CRid = rid;
   const reqs = await getReqs();
-  const r=reqs.find(x=>x.id===rid);if(!r)return;
+  const r = reqs.find(x=>x.id===rid); if(!r) return;
   const cfg = await getSettings();
-  const logoH=cfg.logo?`<img src="${cfg.logo}" style="height:52px;object-fit:contain">`:`<div style="font-weight:900;font-size:1rem">🏢 ${cfg.companyName||'الشركة'}</div>`;
+  const logoH = cfg.logo
+    ? `<img src="${cfg.logo}" style="height:52px;object-fit:contain">`
+    : `<div style="font-weight:900;font-size:1rem">🏢</div>`;
+  const dateStr = r.createdAt || '';
   document.getElementById('pdf-c').innerHTML=`
     <div style="direction:rtl;font-family:Cairo,Arial,sans-serif;color:#111;font-size:13px">
       <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #C9A84C;padding-bottom:12px;margin-bottom:15px">
@@ -849,7 +809,7 @@ async function openPDF(rid){
         <div style="text-align:center">
           <div style="font-size:15px;font-weight:900">طلب عمل إضافي (أوفرتايم)</div>
           <div style="font-size:11px;color:#666;margin-top:3px">رقم: ${r.id}</div>
-          <div style="font-size:11px;color:#666">تاريخ التقديم: ${r.createdAt?new Date(r.createdAt.seconds?r.createdAt.seconds*1000:r.createdAt).toLocaleDateString('ar-SA'):''}</div>
+          <div style="font-size:11px;color:#666">تاريخ التقديم: ${dateStr}</div>
         </div>
         <div style="width:52px"></div>
       </div>
@@ -885,100 +845,104 @@ const tV='border:1px solid #e5e7eb;padding:7px 10px';
 function r2(l1,v1,l2,v2){return `<tr><td style="${tL}">${l1}</td><td style="${tV}">${v1}</td><td style="${tL}">${l2}</td><td style="${tV}">${v2}</td></tr>`;}
 
 async function exportPDF(){
-  const el=document.getElementById('pdf-c');
+  const el = document.getElementById('pdf-c');
   try{
-    const cv=await html2canvas(el,{scale:2.5,useCORS:true,backgroundColor:'#fff',logging:false});
+    const cv = await html2canvas(el,{scale:2.5,useCORS:true,backgroundColor:'#fff',logging:false});
     const{jsPDF}=window.jspdf;
-    const pdf=new jsPDF('p','mm','a4');
-    const w=pdf.internal.pageSize.getWidth();
-    const h=(cv.height*w)/cv.width;
+    const pdf = new jsPDF('p','mm','a4');
+    const w = pdf.internal.pageSize.getWidth();
+    const h = (cv.height*w)/cv.width;
     if(h>297){
       const pages=Math.ceil(h/297);
-      for(let i=0;i<pages;i++){if(i>0)pdf.addPage();pdf.addImage(cv.toDataURL('image/png'),'PNG',0,-(i*297),w,h);}
-    }else{pdf.addImage(cv.toDataURL('image/png'),'PNG',0,0,w,h);}
+      for(let i=0;i<pages;i++){ if(i>0)pdf.addPage(); pdf.addImage(cv.toDataURL('image/png'),'PNG',0,-(i*297),w,h); }
+    }else{
+      pdf.addImage(cv.toDataURL('image/png'),'PNG',0,0,w,h);
+    }
     pdf.save(`overtime-${CRid}.pdf`);
     toast('✅ تم التحميل بنجاح');
-  }catch(e){toast('⚠️ خطأ أثناء التصدير');console.error(e);}
+  }catch(e){ toast('⚠️ خطأ أثناء التصدير'); console.error(e); }
 }
 
-// ─── SUPERVISORS ───
+/* ════ SUPERVISORS ════ */
 async function createSup(){
   const nm=gv('ns-nm'),u=gv('ns-u'),p=gv('ns-p'),d=gv('ns-d'),nid=gv('ns-nid'),mob=gv('ns-mob');
-  const el=document.getElementById('ns-err');
-  if(!nm||!u||!p||!d||!nid||!mob)return se(el,'يرجى ملء جميع الحقول');
-  const btn=event.target; btn.textContent='جار الإنشاء...'; btn.disabled=true;
+  const el = document.getElementById('ns-err');
+  if(!nm||!u||!p||!d||!nid||!mob) return se(el,'يرجى ملء جميع الحقول');
+  setBtn('ns-btn','جار الإنشاء...',true);
   try{
-    const users=await getUsers();
-    if(users.find(x=>x.username===u)){se(el,'اسم المستخدم مستخدم بالفعل');btn.textContent='✅ إنشاء الحساب';btn.disabled=false;return;}
+    const users = await getUsers();
+    if(users.find(x=>x.username===u)){ se(el,'اسم المستخدم مستخدم بالفعل'); setBtn('ns-btn','✅ إنشاء الحساب',false); return; }
     he(el);
-    await addUser({username:u,password:p,name:nm,department:d,nid,mob,role:'supervisor',createdAt:new Date().toISOString()});
-    ['ns-nm','ns-u','ns-p','ns-d','ns-nid','ns-mob'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
-    renderSupsList();toast('✅ تم إنشاء حساب المشرف بنجاح');
-  }catch(e){se(el,'حدث خطأ، حاول مرة أخرى');}
-  btn.textContent='✅ إنشاء الحساب'; btn.disabled=false;
+    await addUser({username:u,password:p,name:nm,department:d,nid,mob,role:'supervisor',createdAt:tsNow()});
+    ['ns-nm','ns-u','ns-p','ns-d','ns-nid','ns-mob'].forEach(i=>{ const e=document.getElementById(i); if(e) e.value=''; });
+    renderSupsList();
+    toast('✅ تم إنشاء حساب المشرف بنجاح');
+  }catch(e){ se(el,'حدث خطأ، حاول مرة أخرى'); }
+  setBtn('ns-btn','✅ إنشاء الحساب',false);
 }
 
 async function renderSupsList(){
-  const el=document.getElementById('sups-list');
-  el.innerHTML=loading();
-  const sups=await getUsers();
-  if(!sups.length){el.innerHTML=empty('👥','لا يوجد مشرفون بعد');return;}
-  el.innerHTML=sups.map(s=>`
-    <div class="si">
-      <div>
-        <div class="sn">${s.name}</div>
-        <div class="sm">👤 ${s.username} | 🏢 ${s.department} | 📱 ${s.mob} | 🪪 ${s.nid||'—'}</div>
-      </div>
-      <button class="btn btn-red" style="font-size:.76rem;padding:.35rem .7rem;flex-shrink:0" onclick="delSupConfirm('${s.id}')">🗑️</button>
-    </div>`).join('');
+  const el = document.getElementById('sups-list');
+  el.innerHTML = loading();
+  try{
+    const sups = await getUsers();
+    if(!sups.length){ el.innerHTML=empty('👥','لا يوجد مشرفون بعد'); return; }
+    el.innerHTML = sups.map(s=>`
+      <div class="si">
+        <div>
+          <div class="sn">${s.name}</div>
+          <div class="sm">👤 ${s.username} | 🏢 ${s.department} | 📱 ${s.mob} | 🪪 ${s.nid||'—'}</div>
+        </div>
+        <button class="btn btn-red" style="font-size:.76rem;padding:.35rem .7rem;flex-shrink:0" onclick="delSupConfirm('${s.id}')">🗑️</button>
+      </div>`).join('');
+  }catch(e){ el.innerHTML=empty('⚠️','تعذر تحميل المشرفين'); }
 }
 
 function delSupConfirm(id){
-  document.getElementById('del-btn').onclick=async()=>{
+  document.getElementById('del-btn').onclick = async()=>{
     await delUser(id); closeM('m-del'); renderSupsList(); toast('تم حذف المشرف');
   };
   openM('m-del');
 }
 
-// ─── SETTINGS ───
+/* ════ SETTINGS ════ */
 async function loadSettings(){
-  const cfg=await getSettings();
-  const img=document.getElementById('lg-img');
-  const wrap=document.getElementById('lg-wrap');
-  if(cfg.logo){img.src=cfg.logo;wrap.style.display='block';}
-  else wrap.style.display='none';
-  refreshLogos(cfg.logo);
+  try{
+    const cfg = await getSettings();
+    const img=document.getElementById('lg-img');
+    const wrap=document.getElementById('lg-wrap');
+    if(cfg.logo){ img.src=cfg.logo; wrap.style.display='block'; }
+    else wrap.style.display='none';
+    refreshLogos(cfg.logo);
+  }catch(e){}
 }
 
 function uploadLogo(inp){
-  if(!inp.files[0])return;
-  const fr=new FileReader();
-  fr.onload=async e=>{
-    await saveSettings({logo:e.target.result});
-    loadSettings();toast('✅ تم رفع الشعار');
-  };
+  if(!inp.files[0]) return;
+  const fr = new FileReader();
+  fr.onload = async e=>{ await saveSettings({logo:e.target.result}); loadSettings(); toast('✅ تم رفع الشعار'); };
   fr.readAsDataURL(inp.files[0]);
 }
 
 async function removeLogo(){
   await saveSettings({logo:null});
   document.getElementById('lg-up').value='';
-  loadSettings();toast('تم حذف الشعار');
+  loadSettings(); toast('تم حذف الشعار');
 }
 
 function refreshLogos(src){
   ['hl-h','hl-e','hl-a'].forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
+    const el = document.getElementById(id); if(!el) return;
     if(src){
       if(el.tagName!=='IMG'){
         const img=document.createElement('img');
-        img.id=id;img.src=src;img.className='logo-img';
+        img.id=id; img.src=src; img.className='logo-img';
         el.parentNode.replaceChild(img,el);
       }else el.src=src;
     }else{
       if(el.tagName==='IMG'){
         const d=document.createElement('div');
-        d.id=id;d.className='logo-ph';d.textContent='🏢';
+        d.id=id; d.className='logo-ph'; d.textContent='🏢';
         el.parentNode.replaceChild(d,el);
       }
     }
@@ -986,45 +950,48 @@ function refreshLogos(src){
 }
 
 async function changePw(){
-  const op=gv('cp-o'),np=gv('cp-n'),msg=document.getElementById('cp-msg');
-  if(!op||!np){msg.className='al al-e';msg.textContent='يرجى ملء جميع الحقول';msg.style.display='block';return;}
-  const cfg=await getSettings();
-  if(op!==(cfg.password||ADMIN_PASS)){msg.className='al al-e';msg.textContent='كلمة المرور الحالية غير صحيحة';msg.style.display='block';return;}
+  const op=gv('cp-o'), np=gv('cp-n'), msg=document.getElementById('cp-msg');
+  if(!op||!np){ msg.className='al al-e'; msg.textContent='يرجى ملء جميع الحقول'; msg.style.display='block'; return; }
+  const cfg = await getSettings();
+  if(op!==(cfg.password||ADMIN_P)){ msg.className='al al-e'; msg.textContent='كلمة المرور الحالية غير صحيحة'; msg.style.display='block'; return; }
   await saveSettings({password:np});
-  msg.className='al al-ok';msg.textContent='✅ تم تغيير كلمة المرور بنجاح';msg.style.display='block';
-  document.getElementById('cp-o').value='';document.getElementById('cp-n').value='';
+  msg.className='al al-ok'; msg.textContent='✅ تم تغيير كلمة المرور بنجاح'; msg.style.display='block';
+  document.getElementById('cp-o').value=''; document.getElementById('cp-n').value='';
 }
 
-// ─── CANVAS ───
+/* ════ CANVAS ════ */
 function initCv(cid){
-  const cv=document.getElementById(cid);if(!cv)return;
-  cv.width=cv.parentElement.clientWidth||300;cv.height=140;
-  const ctx=cv.getContext('2d');
-  ctx.strokeStyle='#0a0a0a';ctx.lineWidth=2.5;ctx.lineCap='round';ctx.lineJoin='round';
-  let drw=false,lx=0,ly=0;
+  const cv = document.getElementById(cid); if(!cv) return;
+  cv.width = cv.parentElement.clientWidth||300; cv.height=140;
+  const ctx = cv.getContext('2d');
+  ctx.strokeStyle='#0a0a0a'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.lineJoin='round';
+  let drw=false, lx=0, ly=0;
   function pos(e){
-    const rc=cv.getBoundingClientRect(),sx=cv.width/rc.width,sy=cv.height/rc.height;
-    return e.touches?{x:(e.touches[0].clientX-rc.left)*sx,y:(e.touches[0].clientY-rc.top)*sy}:{x:(e.clientX-rc.left)*sx,y:(e.clientY-rc.top)*sy};
+    const rc=cv.getBoundingClientRect(), sx=cv.width/rc.width, sy=cv.height/rc.height;
+    return e.touches
+      ?{x:(e.touches[0].clientX-rc.left)*sx, y:(e.touches[0].clientY-rc.top)*sy}
+      :{x:(e.clientX-rc.left)*sx, y:(e.clientY-rc.top)*sy};
   }
-  cv.onmousedown=cv.ontouchstart=e=>{e.preventDefault();drw=true;const p=pos(e);lx=p.x;ly=p.y;ctx.beginPath();ctx.arc(lx,ly,.8,0,Math.PI*2);ctx.fillStyle='#0a0a0a';ctx.fill();};
-  cv.onmousemove=cv.ontouchmove=e=>{e.preventDefault();if(!drw)return;const p=pos(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p.x,p.y);ctx.stroke();lx=p.x;ly=p.y;};
-  cv.onmouseup=cv.ontouchend=cv.onmouseleave=()=>drw=false;
+  cv.onmousedown = cv.ontouchstart = e=>{ e.preventDefault(); drw=true; const p=pos(e); lx=p.x; ly=p.y; ctx.beginPath(); ctx.arc(lx,ly,.8,0,Math.PI*2); ctx.fillStyle='#0a0a0a'; ctx.fill(); };
+  cv.onmousemove = cv.ontouchmove = e=>{ e.preventDefault(); if(!drw) return; const p=pos(e); ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(p.x,p.y); ctx.stroke(); lx=p.x; ly=p.y; };
+  cv.onmouseup = cv.ontouchend = cv.onmouseleave = ()=>drw=false;
 }
-function clr(cid){const cv=document.getElementById(cid);if(cv)cv.getContext('2d').clearRect(0,0,cv.width,cv.height);}
-function cvEmpty(cv){return !cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data.some(v=>v!==0);}
+function clr(cid){ const cv=document.getElementById(cid); if(cv) cv.getContext('2d').clearRect(0,0,cv.width,cv.height); }
+function cvEmpty(cv){ return !cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data.some(v=>v!==0); }
 
-// ─── MODALS ───
-function openM(id){document.getElementById(id).classList.add('on');}
-function closeM(id){document.getElementById(id).classList.remove('on');}
-document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)closeM(this.id);}));
+/* ════ MODALS ════ */
+function openM(id){ document.getElementById(id).classList.add('on'); }
+function closeM(id){ document.getElementById(id).classList.remove('on'); }
+document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',function(e){ if(e.target===this) closeM(this.id); }));
 
-// ─── HELPERS ───
-function gv(id){const e=document.getElementById(id);return e?e.value.trim():'';}
-function se(el,m){el.textContent=m;el.style.display='block';}
-function he(el){el.style.display='none';}
-function tsNow(){return new Date().toLocaleString('ar-SA');}
-function loading(){return `<div class="loading"><div class="spin"></div> جار التحميل...</div>`;}
-function empty(ico,txt){return `<div class="empty"><div class="ei">${ico}</div><p>${txt}</p></div>`;}
+/* ════ HELPERS ════ */
+function gv(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
+function se(el,m){ el.textContent=m; el.style.display='block'; }
+function he(el){ el.style.display='none'; }
+function tsNow(){ return new Date().toLocaleString('ar-SA'); }
+function setBtn(id,txt,dis){ const e=document.getElementById(id); if(!e) return; e.textContent=txt; e.disabled=dis; }
+function loading(){ return `<div class="loading"><div class="spin"></div> جار التحميل...</div>`; }
+function empty(ico,txt){ return `<div class="empty"><div class="ei">${ico}</div><p>${txt}</p></div>`; }
 
 function bdg(s){
   return {
@@ -1036,9 +1003,16 @@ function bdg(s){
 }
 
 function pathBar(s){
-  const steps=[{l:'رفع الطلب',done:true},{l:'موافقة المشرف',done:s==='supervisor_approved'||s==='admin_approved'},{l:'اعتماد الإدارة',done:s==='admin_approved'}];
-  const ac=s==='pending'?0:s==='supervisor_approved'?1:s==='admin_approved'?2:-1;
-  return `<div class="path">${steps.map((st,i)=>`<span class="ps ${st.done?'done':''} ${i===ac?'act':''}">${st.done?'✅':'⭕'} ${st.l}</span>${i<2?'<span class="psep">‹</span>':''}`).join('')}</div>`;
+  const steps=[
+    {l:'رفع الطلب',done:true},
+    {l:'موافقة المشرف',done:s==='supervisor_approved'||s==='admin_approved'},
+    {l:'اعتماد الإدارة',done:s==='admin_approved'}
+  ];
+  const ac = s==='pending'?0:s==='supervisor_approved'?1:s==='admin_approved'?2:-1;
+  return `<div class="path">${steps.map((st,i)=>`
+    <span class="ps ${st.done?'done':''} ${i===ac?'act':''}">${st.done?'✅':'⭕'} ${st.l}</span>
+    ${i<2?'<span class="psep">‹</span>':''}
+  `).join('')}</div>`;
 }
 
 function rInfo(r){
@@ -1051,17 +1025,17 @@ function rInfo(r){
 }
 
 function toast(msg){
-  const t=document.createElement('div');
-  t.textContent=msg;
+  const t = document.createElement('div');
+  t.textContent = msg;
   t.style.cssText='position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);background:#0D1A2E;border:1px solid var(--gold);color:#fff;padding:.6rem 1.3rem;border-radius:11px;font-family:Cairo,sans-serif;font-size:.86rem;z-index:9999;box-shadow:0 8px 22px rgba(0,0,0,.5);white-space:nowrap;animation:up .3s ease;';
   document.body.appendChild(t);
-  setTimeout(()=>t.remove(),3000);
+  setTimeout(()=>t.remove(), 3000);
 }
 
-// ─── BOOT ───
+/* ════ BOOT ════ */
 initFB();
-document.getElementById('e-date').valueAsDate=new Date();
-getSettings().then(cfg=>{if(cfg.logo)refreshLogos(cfg.logo);});
+document.getElementById('e-date').valueAsDate = new Date();
+getSettings().then(cfg=>{ if(cfg && cfg.logo) refreshLogos(cfg.logo); }).catch(()=>{});
 </script>
 </body>
 </html>
